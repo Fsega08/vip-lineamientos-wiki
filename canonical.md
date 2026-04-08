@@ -13,24 +13,23 @@
 | — | **Encabezado.\*** | header.\* | Informacion esencial para identificar y autenticar la transaccion | Si |
 | 1 | Encabezado.Id_Mensaje | header.messageId | UUID unico por transaccion | Si |
 | 2 | Encabezado.Fecha_Hora_Solicitud | header.timestamp | Fecha y hora en formato ISO8601 (`YYYY-MM-DDTHH:MM:SS`) | Si |
-| 3 | Encabezado.Token_Autenticacion | header.authToken | Token de autenticacion (Keycloak) | Si |
-| 4 | Encabezado.Url_Retorno | header.callbackUrl | Callback URL para respuesta asincrona | No |
-| 5 | Encabezado.Tipo_Solicitud | header.requestType | Tipo de solicitud: `transfer`, `consulta`, `creacion`, `actualizacion`, `eliminacion` | Si |
-| 6 | Encabezado.Id_Transaccion_Origen | header.transactionId | Id de seguimiento del sistema origen | No |
-| 7 | Encabezado.Usuario_Login | header.userLogin | Usuario conectado o codigo de sistema consumidor | Si |
+| 3 | Encabezado.Url_Retorno | header.callbackUrl | Callback URL para respuesta asincrona | No |
+| 4 | Encabezado.Tipo_Solicitud | header.requestType | Tipo de solicitud: `transfer`, `consulta`, `creacion`, `actualizacion`, `eliminacion` | Si |
+| 5 | Encabezado.Id_Transaccion_Origen | header.transactionId | Id de seguimiento del sistema origen | No |
+| 6 | Encabezado.Usuario_Login | header.userLogin | Usuario conectado o codigo de sistema consumidor | Si |
 | — | **Dispositivo.\*** | deviceContext.\* | Informacion sobre el dispositivo origen | Si |
-| 8 | Dispositivo.Id_Dispositivo | deviceContext.deviceId | Identificador unico del dispositivo | No |
-| 9 | Dispositivo.Tipo_Dispositivo | deviceContext.deviceType | Tipo: `Mobile`, `Desktop` | No |
-| 10 | Dispositivo.Version_Sistema_Operativo | deviceContext.osVersion | Version del SO | No |
-| 11 | Dispositivo.Direccion_Ip | deviceContext.ipAddress | Direccion IP del dispositivo | Si |
-| 12 | Dispositivo.Direccion_Mac | deviceContext.macAddress | Direccion MAC del dispositivo | No |
+| 7 | Dispositivo.Id_Dispositivo | deviceContext.deviceId | Identificador unico del dispositivo | No |
+| 8 | Dispositivo.Tipo_Dispositivo | deviceContext.deviceType | Tipo: `Mobile`, `Desktop` | No |
+| 9 | Dispositivo.Version_Sistema_Operativo | deviceContext.osVersion | Version del SO | No |
+| 10 | Dispositivo.Direccion_Ip | deviceContext.ipAddress | Direccion IP del dispositivo | Si |
+| 11 | Dispositivo.Direccion_Mac | deviceContext.macAddress | Direccion MAC del dispositivo | No |
 | — | **Geolocalizacion.\*** | deviceContext.geoLocation.\* | Ubicacion fisica del dispositivo | No |
-| 13 | Geolocalizacion.Longitud | deviceContext.geoLocation.longitude | Coordenada de longitud | No |
-| 14 | Geolocalizacion.Latitud | deviceContext.geoLocation.latitude | Coordenada de latitud | No |
+| 12 | Geolocalizacion.Longitud | deviceContext.geoLocation.longitude | Coordenada de longitud | No |
+| 13 | Geolocalizacion.Latitud | deviceContext.geoLocation.latitude | Coordenada de latitud | No |
 | — | **Aplicacion_Cliente.\*** | clientApp.\* | Informacion de la aplicacion cliente | No |
-| 15 | Aplicacion_Cliente.Nombre_Aplicacion | clientApp.appName | Nombre de la aplicacion | No |
-| 16 | Aplicacion_Cliente.Version_Aplicacion | clientApp.appVersion | Version de la aplicacion | No |
-| 17 | Aplicacion_Cliente.Agente_Usuario | clientApp.userAgent | User agent del cliente HTTP | No |
+| 14 | Aplicacion_Cliente.Nombre_Aplicacion | clientApp.appName | Nombre de la aplicacion | No |
+| 15 | Aplicacion_Cliente.Version_Aplicacion | clientApp.appVersion | Version de la aplicacion | No |
+| 16 | Aplicacion_Cliente.Agente_Usuario | clientApp.userAgent | User agent del cliente HTTP | No |
 | — | **Datos_Operacion.\*** | operationData.\* | Datos especificos de cada operacion (estructura propia por servicio) | Si |
 
 ### Ejemplo de Request
@@ -40,7 +39,6 @@
   "Encabezado": {
     "Id_Mensaje": "550e8400-e29b-41d4-a716-446655440000",
     "Fecha_Hora_Solicitud": "2026-04-06T08:30:00-05:00",
-    "Token_Autenticacion": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9",
     "Url_Retorno": "https://api.cliente.com/callback/respuesta",
     "Tipo_Solicitud": "Consulta",
     "Id_Transaccion_Origen": "TRX-20260406-000123",
