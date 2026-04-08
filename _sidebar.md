@@ -5,5 +5,10 @@
   - [Manejo de Errores](manejo-errores.md)
   - [Microservicios y Colas](nombramiento-microservicios-colas.md)
   - [Cache Redis](cache-redis.md)
+  - [Kong API Gateway](lineamientos-kong.md)
+  - [Manifiestos K8s](lineamientos-k8s.md)
+  - [Namespaces](lineamientos-namespaces.md)
 - **Guias**
   - [Documentacion de Servicios](guia-documentacion.md)
+- **Inventario**
+  - [Servicios y Dependencias](inventario-servicios.md)
