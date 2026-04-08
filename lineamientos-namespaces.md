@@ -29,16 +29,16 @@ Definir la convencion estandar de nombramiento de namespaces en Kubernetes (EKS)
 
 | Namespace | Tipo | Servicios que contiene |
 |-----------|------|----------------------|
-| `vip-gateway` | Plataforma | Kong API Gateway, configuracion de routes y plugins |
-| `vip-catastro` | Dominio | vip-catastro-consulta, vip-catastro-mutacion |
-| `vip-geo` | Dominio | vip-geo-service |
-| `vip-urbanismo` | Dominio | vip-urbanismo-licencias |
-| `vip-hacienda` | Dominio | vip-hacienda-predial |
+| `vip-gateway` | Plataforma | vip-gateway-gateway-proxy (Kong) |
+| `vip-catastro` | Dominio | vip-catastro-service-consulta, vip-catastro-service-mutacion |
+| `vip-geo` | Dominio | vip-geo-service-geometrias |
+| `vip-urbanismo` | Dominio | vip-urbanismo-service-licencias |
+| `vip-hacienda` | Dominio | vip-hacienda-service-predial |
 | `vip-infra` | Infraestructura | Redis, RabbitMQ, PostgreSQL/PostGIS, Keycloak |
 | `vip-observabilidad` | Plataforma | Prometheus, Grafana, Loki, Jaeger |
-| `vip-archivos` | Plataforma | vip-archivo-service |
-| `vip-notificaciones` | Plataforma | vip-notificacion-service |
-| `vip-workflow` | Plataforma | Camunda, vip-workflow-engine |
+| `vip-archivos` | Plataforma | vip-archivos-service-archivo |
+| `vip-notificaciones` | Plataforma | vip-notificaciones-service-notificacion |
+| `vip-workflow` | Plataforma | Camunda, vip-workflow-engine-camunda |
 
 ---
 
@@ -52,10 +52,10 @@ http://{microservicio}.{namespace}.svc.cluster.local:{puerto}
 
 | Microservicio | Namespace | URL Interna |
 |---------------|-----------|-------------|
-| vip-catastro-consulta | vip-catastro | `http://vip-catastro-consulta.vip-catastro.svc.cluster.local:8080` |
-| vip-catastro-mutacion | vip-catastro | `http://vip-catastro-mutacion.vip-catastro.svc.cluster.local:8080` |
-| vip-geo-service | vip-geo | `http://vip-geo-service.vip-geo.svc.cluster.local:8080` |
-| vip-gateway (Kong) | vip-gateway | `http://kong-proxy.vip-gateway.svc.cluster.local:80` |
+| vip-catastro-service-consulta | vip-catastro | `http://vip-catastro-service-consulta.vip-catastro.svc.cluster.local:8080` |
+| vip-catastro-service-mutacion | vip-catastro | `http://vip-catastro-service-mutacion.vip-catastro.svc.cluster.local:8080` |
+| vip-geo-service-geometrias | vip-geo | `http://vip-geo-service-geometrias.vip-geo.svc.cluster.local:8080` |
+| vip-gateway-gateway-proxy | vip-gateway | `http://vip-gateway-gateway-proxy.vip-gateway.svc.cluster.local:80` |
 
 ---
 

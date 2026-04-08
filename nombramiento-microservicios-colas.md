@@ -14,7 +14,9 @@ Definir la convencion estandar de nombramiento para microservicios, exchanges, c
 
 | Prefijo | Cliente | Proyecto |
 |---------|---------|----------|
-| acm | Alcaldia de Medellin | Vortex Integration Platform Alcaldia Medellin |
+| vip | Alcaldia de Medellin | Vortex Integration Platform Alcaldia Medellin |
+
+El prefijo es configurable por proyecto en `application.yml` bajo `plataforma.prefijo`.
 
 ---
 
@@ -23,30 +25,48 @@ Definir la convencion estandar de nombramiento para microservicios, exchanges, c
 ### 3.1 Patron
 
 ```
-{prefijo}-{dominio}-{responsabilidad}
+{prefijo}-{namespace}-{componente}-{funcionalidad}
 ```
 
-### 3.2 Reglas
+| Segmento | Descripcion | Ejemplo |
+|----------|-------------|---------|
+| `prefijo` | Identificador del proyecto, configurable por ambiente | `vip` |
+| `namespace` | Dominio funcional. Coincide con el namespace de K8s (sin prefijo) | `catastro`, `geo`, `gateway` |
+| `componente` | Tipo tecnico del artefacto (ver tabla 3.2) | `service`, `adapter`, `gateway` |
+| `funcionalidad` | Funcion especifica que cumple | `consulta`, `mutacion`, `validacion` |
+
+### 3.2 Tipos de Componente
+
+| Componente | Descripcion | Uso |
+|------------|-------------|-----|
+| `service` | Microservicio REST que expone logica de negocio o consulta | Servicios principales de cada dominio |
+| `adapter` | Adaptador hacia un backend o sistema externo | Integraciones con IGAC, SNR, Hacienda Municipal |
+| `listener` | Consumidor de eventos o colas de mensajeria | Procesamiento asincrono de eventos RabbitMQ |
+| `worker` | Proceso batch o de background | Tareas programadas, procesamiento masivo |
+| `engine` | Motor de workflow o reglas de negocio | Camunda, motores de decision |
+| `gateway` | API Gateway o punto de entrada | Kong, BFF |
+
+### 3.3 Reglas
 
 - Todo en **minusculas**, formato **kebab-case** (separado por guiones).
-- Maximo **3 segmentos**: prefijo, dominio y responsabilidad.
-- El prefijo se obtiene de la configuracion del ambiente (`application.properties`).
-- El dominio identifica el modulo funcional (catastro, geo, urbanismo, hacienda, etc.).
-- La responsabilidad describe la funcion especifica del microservicio (consulta, mutacion, service, engine).
-- Si el microservicio es de proposito general dentro del dominio, usar `service` como responsabilidad.
+- Siempre **4 segmentos**: prefijo, namespace, componente y funcionalidad.
+- El prefijo se obtiene de la configuracion del ambiente (`application.yml` bajo `plataforma.prefijo`).
+- El namespace identifica el dominio funcional y **debe coincidir** con el namespace de Kubernetes (sin el prefijo). Ej: namespace K8s `vip-catastro` → segmento `catastro`.
+- El componente indica el tipo tecnico del artefacto (ver tabla 3.2).
+- La funcionalidad describe la responsabilidad especifica del microservicio.
 
-### 3.3 Catalogo de Microservicios
+### 3.4 Catalogo de Microservicios
 
-| Microservicio | Dominio | Responsabilidad |
-|---------------|---------|-----------------|
-| {prefijo}-catastro-consulta | Catastro | Consultas de predios, NPN, avaluos |
-| {prefijo}-catastro-mutacion | Catastro | Operaciones de mutacion catastral |
-| {prefijo}-geo-service | Geoespacial | Operaciones PostGIS, validacion de geometrias |
-| {prefijo}-urbanismo-licencias | Urbanismo | Gestion de licencias urbanisticas |
-| {prefijo}-hacienda-predial | Hacienda | Impuesto predial, liquidacion |
-| {prefijo}-gateway | Plataforma | API Gateway / punto de entrada |
-| {prefijo}-notificacion-service | Plataforma | Emails, SMS, notificaciones push |
-| {prefijo}-archivo-service | Plataforma | Gestion de archivos S3 |
+| Microservicio | Namespace | Componente | Funcionalidad |
+|---------------|-----------|------------|---------------|
+| vip-catastro-service-consulta | vip-catastro | service | Consultas de predios, NPN, avaluos |
+| vip-catastro-service-mutacion | vip-catastro | service | Operaciones de mutacion catastral |
+| vip-geo-service-geometrias | vip-geo | service | Operaciones PostGIS, validacion de geometrias |
+| vip-urbanismo-service-licencias | vip-urbanismo | service | Gestion de licencias urbanisticas |
+| vip-hacienda-service-predial | vip-hacienda | service | Impuesto predial, liquidacion |
+| vip-gateway-gateway-proxy | vip-gateway | gateway | API Gateway / punto de entrada (Kong) |
+| vip-notificaciones-service-notificacion | vip-notificaciones | service | Emails, SMS, notificaciones push |
+| vip-archivos-service-archivo | vip-archivos | service | Gestion de archivos S3 |
 
 ---
 
@@ -55,6 +75,8 @@ Definir la convencion estandar de nombramiento para microservicios, exchanges, c
 ### 4.1 Componentes y Patrones
 
 La mensajeria se organiza con exchanges de tipo **Topic**. Cada dominio tiene su propio exchange y las colas se vinculan mediante routing keys especificas.
+
+> **Nota:** Las colas y routing keys mantienen su propia convencion con dot notation (separados por puntos) independiente del patron de 4 segmentos de los microservicios.
 
 | Componente | Patron | Ejemplo |
 |------------|--------|---------|
@@ -100,8 +122,9 @@ Los siguientes eventos estan predefinidos como vocabulario comun para las routin
 
 ## 5. Consideraciones Generales
 
-- El prefijo es **configurable por ambiente** y no debe hardcodearse en el codigo fuente.
+- El prefijo es **configurable por ambiente** en `application.yml` bajo `plataforma.prefijo` y no debe hardcodearse en el codigo fuente.
 - Al agregar un nuevo microservicio o cola, se debe actualizar el catalogo en este documento.
-- Las DLQ deben configurarse con politicas de reintento (retry count, backoff) definidas por el equipo de infraestructura.
+- Las DLQ deben configurarse con politicas de reintento: maximo **3 reintentos** con **backoff exponencial** (1s, 2s, 4s). Mensajes fallidos van a DLQ con TTL de **24 horas**.
 - Los exchanges de tipo Topic permiten que un consumidor se suscriba a todos los eventos de un dominio usando el wildcard `#` (ej: `vip.catastro.#`).
-- La convencion de microservicios aplica tambien al nombre del **artefacto Maven**, al nombre del **contenedor Docker** y al **Deployment en Kubernetes (EKS)**.
+- La convencion de 4 segmentos aplica tambien al nombre del **artefacto Maven**, al nombre del **contenedor Docker** y al **Deployment en Kubernetes (EKS)**.
+- El segmento `namespace` del nombre del microservicio debe coincidir con el namespace de K8s (ver [Lineamientos de Namespaces](lineamientos-namespaces.md)).

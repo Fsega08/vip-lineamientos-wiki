@@ -14,36 +14,36 @@ Centralizar el inventario de todos los microservicios de la plataforma VIP con s
 
 ### 2.1 Dominio: Catastro
 
-| Microservicio | Namespace | Responsabilidad | Estado |
-|---------------|-----------|-----------------|--------|
-| vip-catastro-consulta | vip-catastro | Consultas de predios, NPN, avaluos, intervinientes | Activo |
-| vip-catastro-mutacion | vip-catastro | Operaciones de mutacion catastral (transferencias, actualizaciones) | Activo |
+| Microservicio | Namespace | Componente | Responsabilidad | Estado |
+|---------------|-----------|------------|-----------------|--------|
+| vip-catastro-service-consulta | vip-catastro | service | Consultas de predios, NPN, avaluos, intervinientes | Activo |
+| vip-catastro-service-mutacion | vip-catastro | service | Operaciones de mutacion catastral (transferencias, actualizaciones) | Activo |
 
 ### 2.2 Dominio: Geoespacial
 
-| Microservicio | Namespace | Responsabilidad | Estado |
-|---------------|-----------|-----------------|--------|
-| vip-geo-service | vip-geo | Operaciones PostGIS, validacion de geometrias, transformacion de coordenadas | Activo |
+| Microservicio | Namespace | Componente | Responsabilidad | Estado |
+|---------------|-----------|------------|-----------------|--------|
+| vip-geo-service-geometrias | vip-geo | service | Operaciones PostGIS, validacion de geometrias, transformacion de coordenadas | Activo |
 
 ### 2.3 Dominio: Urbanismo
 
-| Microservicio | Namespace | Responsabilidad | Estado |
-|---------------|-----------|-----------------|--------|
-| vip-urbanismo-licencias | vip-urbanismo | Gestion de licencias urbanisticas, uso de suelo | Planificado |
+| Microservicio | Namespace | Componente | Responsabilidad | Estado |
+|---------------|-----------|------------|-----------------|--------|
+| vip-urbanismo-service-licencias | vip-urbanismo | service | Gestion de licencias urbanisticas, uso de suelo | Planificado |
 
 ### 2.4 Dominio: Hacienda
 
-| Microservicio | Namespace | Responsabilidad | Estado |
-|---------------|-----------|-----------------|--------|
-| vip-hacienda-predial | vip-hacienda | Impuesto predial, liquidacion tributaria | Planificado |
+| Microservicio | Namespace | Componente | Responsabilidad | Estado |
+|---------------|-----------|------------|-----------------|--------|
+| vip-hacienda-service-predial | vip-hacienda | service | Impuesto predial, liquidacion tributaria | Planificado |
 
 ### 2.5 Plataforma
 
-| Microservicio | Namespace | Responsabilidad | Estado |
-|---------------|-----------|-----------------|--------|
-| vip-gateway (Kong) | vip-gateway | API Gateway, enrutamiento, autenticacion | Activo |
-| vip-notificacion-service | vip-notificaciones | Emails, SMS, notificaciones push | Planificado |
-| vip-archivo-service | vip-archivos | Gestion de archivos S3 | Planificado |
+| Microservicio | Namespace | Componente | Responsabilidad | Estado |
+|---------------|-----------|------------|-----------------|--------|
+| vip-gateway-gateway-proxy | vip-gateway | gateway | API Gateway, enrutamiento, autenticacion (Kong) | Activo |
+| vip-notificaciones-service-notificacion | vip-notificaciones | service | Emails, SMS, notificaciones push | Planificado |
+| vip-archivos-service-archivo | vip-archivos | service | Gestion de archivos S3 | Planificado |
 
 ---
 
@@ -53,37 +53,37 @@ Centralizar el inventario de todos los microservicios de la plataforma VIP con s
 
 | Microservicio | PostgreSQL | PostGIS | Redis | RabbitMQ | Keycloak |
 |---------------|:----------:|:-------:|:-----:|:--------:|:--------:|
-| vip-catastro-consulta | Si | No | Si | Si | Si |
-| vip-catastro-mutacion | Si | No | Si | Si | Si |
-| vip-geo-service | Si | Si | Si | Si | Si |
-| vip-urbanismo-licencias | Si | No | Si | Si | Si |
-| vip-hacienda-predial | Si | No | Si | Si | Si |
-| vip-gateway (Kong) | Si | No | Si | No | Si |
+| vip-catastro-service-consulta | Si | No | Si | Si | Si |
+| vip-catastro-service-mutacion | Si | No | Si | Si | Si |
+| vip-geo-service-geometrias | Si | Si | Si | Si | Si |
+| vip-urbanismo-service-licencias | Si | No | Si | Si | Si |
+| vip-hacienda-service-predial | Si | No | Si | Si | Si |
+| vip-gateway-gateway-proxy | Si | No | Si | No | Si |
 
 ### 3.2 Dependencias Externas (Backends)
 
 | Microservicio | IGAC | SNR | Hacienda Municipal | Catastro Backend |
 |---------------|:----:|:---:|:------------------:|:----------------:|
-| vip-catastro-consulta | Si | Si | No | Si |
-| vip-catastro-mutacion | Si | No | No | Si |
-| vip-geo-service | Si | No | No | No |
-| vip-urbanismo-licencias | No | No | No | No |
-| vip-hacienda-predial | No | No | Si | Si |
+| vip-catastro-service-consulta | Si | Si | No | Si |
+| vip-catastro-service-mutacion | Si | No | No | Si |
+| vip-geo-service-geometrias | Si | No | No | No |
+| vip-urbanismo-service-licencias | No | No | No | No |
+| vip-hacienda-service-predial | No | No | Si | Si |
 
 ### 3.3 Dependencias entre Microservicios
 
 | Microservicio | Depende de | Tipo | Descripcion |
 |---------------|------------|------|-------------|
-| vip-catastro-mutacion | vip-catastro-consulta | Sincrono | Valida existencia del predio antes de mutar |
-| vip-catastro-mutacion | vip-geo-service | Sincrono | Valida geometria en mutaciones con componente espacial |
-| vip-catastro-consulta | vip-catastro-mutacion | Evento | Escucha `vip.catastro.predio.actualizado` para invalidar cache |
-| vip-hacienda-predial | vip-catastro-consulta | Sincrono | Consulta datos del predio para liquidacion |
+| vip-catastro-service-mutacion | vip-catastro-service-consulta | Sincrono | Valida existencia del predio antes de mutar |
+| vip-catastro-service-mutacion | vip-geo-service-geometrias | Sincrono | Valida geometria en mutaciones con componente espacial |
+| vip-catastro-service-consulta | vip-catastro-service-mutacion | Evento | Escucha `vip.catastro.predio.actualizado` para invalidar cache |
+| vip-hacienda-service-predial | vip-catastro-service-consulta | Sincrono | Consulta datos del predio para liquidacion |
 
 ---
 
 ## 4. Endpoints por Microservicio
 
-### vip-catastro-consulta
+### vip-catastro-service-consulta
 
 | Metodo | Endpoint | Descripcion |
 |--------|----------|-------------|
@@ -94,7 +94,7 @@ Centralizar el inventario de todos los microservicios de la plataforma VIP con s
 | GET | `/actuator/health/readiness` | Readiness probe |
 | GET | `/swagger-ui.html` | Documentacion Swagger |
 
-### vip-catastro-mutacion
+### vip-catastro-service-mutacion
 
 | Metodo | Endpoint | Descripcion |
 |--------|----------|-------------|
@@ -104,7 +104,7 @@ Centralizar el inventario de todos los microservicios de la plataforma VIP con s
 | GET | `/actuator/health/readiness` | Readiness probe |
 | GET | `/swagger-ui.html` | Documentacion Swagger |
 
-### vip-geo-service
+### vip-geo-service-geometrias
 
 | Metodo | Endpoint | Descripcion |
 |--------|----------|-------------|
@@ -121,11 +121,11 @@ Centralizar el inventario de todos los microservicios de la plataforma VIP con s
 
 | Microservicio | Publica en | Consume de |
 |---------------|------------|------------|
-| vip-catastro-mutacion | `vip.catastro.mutacion.solicitada`, `vip.catastro.predio.actualizado` | — |
-| vip-catastro-consulta | — | `vip.catastro.predio.actualizado` (invalida cache) |
-| vip-geo-service | `vip.geo.validacion.completado`, `vip.geo.validacion.fallido` | `vip.geo.validacion.solicitada` |
-| vip-notificacion-service | — | `vip.notificacion.email.enviado` |
-| vip-archivo-service | `vip.archivo.procesamiento.completado` | `vip.archivo.procesamiento.iniciado` |
+| vip-catastro-service-mutacion | `vip.catastro.mutacion.solicitada`, `vip.catastro.predio.actualizado` | — |
+| vip-catastro-service-consulta | — | `vip.catastro.predio.actualizado` (invalida cache) |
+| vip-geo-service-geometrias | `vip.geo.validacion.completado`, `vip.geo.validacion.fallido` | `vip.geo.validacion.solicitada` |
+| vip-notificaciones-service-notificacion | — | `vip.notificacion.email.enviado` |
+| vip-archivos-service-archivo | `vip.archivo.procesamiento.completado` | `vip.archivo.procesamiento.iniciado` |
 
 ---
 
@@ -152,7 +152,7 @@ Centralizar el inventario de todos los microservicios de la plataforma VIP con s
 
 Al agregar un nuevo microservicio a la plataforma:
 
-1. Registrarlo en la seccion **2. Inventario** con su dominio y namespace.
+1. Registrarlo en la seccion **2. Inventario** con su dominio, namespace y componente.
 2. Actualizar la **Matriz de Dependencias** (seccion 3).
 3. Documentar sus **Endpoints** (seccion 4).
 4. Registrar sus **Colas** si aplica (seccion 5).

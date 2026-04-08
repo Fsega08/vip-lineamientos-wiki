@@ -84,9 +84,9 @@ Cuando un microservicio modifica un dato, publica un evento en RabbitMQ. El serv
 
 **Ejemplo:**
 
-1. El microservicio `vip-catastro-mutacion` actualiza un predio.
+1. El microservicio `vip-catastro-service-mutacion` actualiza un predio.
 2. Publica evento en routing key: `vip.catastro.predio.actualizado`
-3. El microservicio `vip-catastro-consulta` escucha el evento.
+3. El microservicio `vip-catastro-service-consulta` escucha el evento.
 4. Borra la key `vip:catastro:predio:{npn}` de Redis.
 5. El siguiente request consultara el dato fresco al backend y lo recacheara.
 

@@ -29,16 +29,16 @@ El nombre del service en Kong debe coincidir con el nombre del microservicio def
 **Patron:**
 
 ```
-{prefijo}-{dominio}-{responsabilidad}
+{prefijo}-{namespace}-{componente}-{funcionalidad}
 ```
 
 | Service Kong | Microservicio Destino | Puerto |
 |--------------|----------------------|--------|
-| `vip-catastro-consulta` | vip-catastro-consulta | 8080 |
-| `vip-catastro-mutacion` | vip-catastro-mutacion | 8080 |
-| `vip-geo-service` | vip-geo-service | 8080 |
-| `vip-urbanismo-licencias` | vip-urbanismo-licencias | 8080 |
-| `vip-hacienda-predial` | vip-hacienda-predial | 8080 |
+| `vip-catastro-service-consulta` | vip-catastro-service-consulta | 8080 |
+| `vip-catastro-service-mutacion` | vip-catastro-service-mutacion | 8080 |
+| `vip-geo-service-geometrias` | vip-geo-service-geometrias | 8080 |
+| `vip-urbanismo-service-licencias` | vip-urbanismo-service-licencias | 8080 |
+| `vip-hacienda-service-predial` | vip-hacienda-service-predial | 8080 |
 
 **URL del upstream:**
 
@@ -49,7 +49,7 @@ http://{service-name}.{namespace}.svc.cluster.local:{puerto}
 Ejemplo:
 
 ```
-http://vip-catastro-consulta.vip-catastro.svc.cluster.local:8080
+http://vip-catastro-service-consulta.vip-catastro.svc.cluster.local:8080
 ```
 
 ### 3.2 Routes
@@ -62,11 +62,11 @@ http://vip-catastro-consulta.vip-catastro.svc.cluster.local:8080
 
 | Route | Service | Metodos |
 |-------|---------|---------|
-| `/vip/catastro/predios` | vip-catastro-consulta | GET |
-| `/vip/catastro/predios/mutaciones` | vip-catastro-mutacion | POST, PUT |
-| `/vip/geo/geometrias` | vip-geo-service | GET, POST |
-| `/vip/urbanismo/licencias` | vip-urbanismo-licencias | GET, POST |
-| `/vip/hacienda/predial` | vip-hacienda-predial | GET, POST |
+| `/vip/catastro/predios` | vip-catastro-service-consulta | GET |
+| `/vip/catastro/predios/mutaciones` | vip-catastro-service-mutacion | POST, PUT |
+| `/vip/geo/geometrias` | vip-geo-service-geometrias | GET, POST |
+| `/vip/urbanismo/licencias` | vip-urbanismo-service-licencias | GET, POST |
+| `/vip/hacienda/predial` | vip-hacienda-service-predial | GET, POST |
 
 **Reglas:**
 
@@ -159,7 +159,7 @@ Cuando Kong no puede enrutar una solicitud, debe retornar la estructura de error
       "Codigo_Error": "SYS-002",
       "Ruta": null,
       "Mensaje": "El servicio no esta disponible temporalmente.",
-      "Origen": "vip-gateway"
+      "Origen": "vip-gateway-gateway-proxy"
     }
   ],
   "Datos_Operacion": {}
@@ -179,7 +179,7 @@ Cuando Kong no puede enrutar una solicitud, debe retornar la estructura de error
       "Codigo_Error": "BIZ-005",
       "Ruta": null,
       "Mensaje": "Se han realizado demasiadas solicitudes. Intente mas tarde.",
-      "Origen": "vip-gateway"
+      "Origen": "vip-gateway-gateway-proxy"
     }
   ],
   "Datos_Operacion": {}
