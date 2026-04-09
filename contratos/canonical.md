@@ -6,6 +6,8 @@
 
 > **Nota:** aunque los campos sean opcionales, la estructura siempre debe enviarse completa y la informacion del campo vacia.
 
+> **Convencion de idioma:** el body JSON de request y response viaja en **espanol** con nomenclatura LADM-COL (`Snake_Case` con mayuscula inicial). Los headers HTTP se mantienen en **ingles** estandar (`Authorization`, `Content-Type`, `X-Correlation-Id`). La columna "Campo Ingles" en las tablas siguientes es solo referencia para mapeo con sistemas BIAN — el contrato real usa los nombres en espanol.
+
 ## 1. Estructura de Solicitud (Request)
 
 | No. | Campo Espanol | Campo Ingles | Descripcion | Obligatorio |

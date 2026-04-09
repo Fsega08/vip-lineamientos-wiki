@@ -1,10 +1,16 @@
 - [Inicio](/)
+- [Overview de VIP](overview.md)
+- [Glosario](glosario.md)
 - **Contratos de API**
   - [Canonical](contratos/canonical.md)
   - [Manejo de Errores](contratos/manejo-errores.md)
 - **Estandares de Desarrollo**
   - [Microservicios y Colas](estandares/nombramiento-microservicios-colas.md)
+  - [Comunicacion Sync vs Async](estandares/comunicacion-sync-async.md)
+  - [Versionamiento de API](estandares/versionamiento-api.md)
+  - [Paginacion y Filtrado](estandares/paginacion-filtrado.md)
   - [Cache Redis](estandares/cache-redis.md)
+  - [CI/CD](estandares/lineamientos-cicd.md)
 - **Infraestructura**
   - [Kong API Gateway](infraestructura/lineamientos-kong.md)
   - [Manifiestos K8s](infraestructura/lineamientos-k8s.md)
@@ -13,5 +19,6 @@
   - [Seguridad](infraestructura/lineamientos-seguridad.md)
 - **Guias**
   - [Documentacion de Servicios](guias/guia-documentacion.md)
+  - [Template de Servicio](guias/template-servicio.md)
 - **Inventario**
   - [Servicios y Dependencias](inventario/inventario-servicios.md)
