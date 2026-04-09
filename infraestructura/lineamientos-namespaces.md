@@ -1,12 +1,12 @@
 # Lineamientos de Nombramiento de Namespaces
 
-[Volver al indice](index.md)
+[Volver al indice](/)
 
 ---
 
 ## 1. Objetivo
 
-Definir la convencion estandar de nombramiento de namespaces en Kubernetes (EKS) para la plataforma VIP, garantizando aislamiento logico por dominio, claridad operativa y alineacion con el estandar de nombramiento [SF-NM](nombramiento-microservicios-colas.md).
+Definir la convencion estandar de nombramiento de namespaces en Kubernetes (EKS) para la plataforma VIP, garantizando aislamiento logico por dominio, claridad operativa y alineacion con el estandar de nombramiento [SF-NM](estandares/nombramiento-microservicios-colas.md).
 
 ---
 
@@ -188,7 +188,7 @@ metadata:
 
 ## 8. Consideraciones Generales
 
-- No crear namespaces adicionales sin actualizar este catalogo y el [Inventario de Servicios](inventario-servicios.md).
+- No crear namespaces adicionales sin actualizar este catalogo y el [Inventario de Servicios](inventario/inventario-servicios.md).
 - Los ambientes (dev, qa, prod) se separan por **cluster**, no por namespace. El mismo namespace `vip-catastro` existe en los 3 clusters.
 - El namespace `default` de Kubernetes **no debe usarse** para cargas de trabajo VIP.
 - Los namespaces de infraestructura (`vip-infra`) no deben contener microservicios de negocio.

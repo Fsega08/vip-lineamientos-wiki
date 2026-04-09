@@ -1,6 +1,6 @@
 # Manejo de Errores de Interoperabilidad
 
-[Volver al indice](index.md)
+[Volver al indice](/)
 
 ---
 

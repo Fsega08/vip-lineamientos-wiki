@@ -1,6 +1,6 @@
 # Guia de Documentacion de Servicios
 
-[Volver al indice](index.md)
+[Volver al indice](/)
 
 ---
 
@@ -71,7 +71,7 @@ Por defecto, el canonical de interoperabilidad aplica a todos los servicios medi
 
 En la documentacion se debe indicar explicitamente si algun campo del canonical es **obligatorio** y requerido por el servicio.
 
-Ver: [Canonical de Interoperabilidad](canonical.md)
+Ver: [Canonical de Interoperabilidad](contratos/canonical.md)
 
 ---
 
@@ -133,7 +133,7 @@ En BIAN, la identificacion es:
 - Definir si se requieren mensajes de error personalizados.
 - Definir si son necesarios reintentos y/o reversos ante fallos.
 
-Ver detalle completo: [Manejo de Errores](manejo-errores.md)
+Ver detalle completo: [Manejo de Errores](contratos/manejo-errores.md)
 
 ---
 

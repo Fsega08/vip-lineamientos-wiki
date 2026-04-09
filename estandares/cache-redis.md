@@ -1,6 +1,6 @@
 # Estandar de Manejo de Cache — Redis
 
-[Volver al indice](index.md)
+[Volver al indice](/)
 
 ---
 

@@ -1,14 +1,15 @@
-- [Inicio](index.md)
-- **Lineamientos**
-  - [Lineamientos de Interoperabilidad](lineamientos-interoperabilidad.md)
-  - [Canonical](canonical.md)
-  - [Manejo de Errores](manejo-errores.md)
-  - [Microservicios y Colas](nombramiento-microservicios-colas.md)
-  - [Cache Redis](cache-redis.md)
-  - [Kong API Gateway](lineamientos-kong.md)
-  - [Manifiestos K8s](lineamientos-k8s.md)
-  - [Namespaces](lineamientos-namespaces.md)
+- [Inicio](/)
+- **Contratos de API**
+  - [Canonical](contratos/canonical.md)
+  - [Manejo de Errores](contratos/manejo-errores.md)
+- **Estandares de Desarrollo**
+  - [Microservicios y Colas](estandares/nombramiento-microservicios-colas.md)
+  - [Cache Redis](estandares/cache-redis.md)
+- **Infraestructura**
+  - [Kong API Gateway](infraestructura/lineamientos-kong.md)
+  - [Manifiestos K8s](infraestructura/lineamientos-k8s.md)
+  - [Namespaces](infraestructura/lineamientos-namespaces.md)
 - **Guias**
-  - [Documentacion de Servicios](guia-documentacion.md)
+  - [Documentacion de Servicios](guias/guia-documentacion.md)
 - **Inventario**
-  - [Servicios y Dependencias](inventario-servicios.md)
+  - [Servicios y Dependencias](inventario/inventario-servicios.md)

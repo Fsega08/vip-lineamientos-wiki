@@ -1,6 +1,6 @@
 # Estandar de Nombramiento de Microservicios y Colas
 
-[Volver al indice](index.md)
+[Volver al indice](/)
 
 ---
 
@@ -127,4 +127,4 @@ Los siguientes eventos estan predefinidos como vocabulario comun para las routin
 - Las DLQ deben configurarse con politicas de reintento: maximo **3 reintentos** con **backoff exponencial** (1s, 2s, 4s). Mensajes fallidos van a DLQ con TTL de **24 horas**.
 - Los exchanges de tipo Topic permiten que un consumidor se suscriba a todos los eventos de un dominio usando el wildcard `#` (ej: `vip.catastro.#`).
 - La convencion de 4 segmentos aplica tambien al nombre del **artefacto Maven**, al nombre del **contenedor Docker** y al **Deployment en Kubernetes (EKS)**.
-- El segmento `namespace` del nombre del microservicio debe coincidir con el namespace de K8s (ver [Lineamientos de Namespaces](lineamientos-namespaces.md)).
+- El segmento `namespace` del nombre del microservicio debe coincidir con el namespace de K8s (ver [Lineamientos de Namespaces](infraestructura/lineamientos-namespaces.md)).

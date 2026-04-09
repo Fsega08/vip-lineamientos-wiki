@@ -1,6 +1,6 @@
 # Lineamientos de Kong API Gateway
 
-[Volver al indice](index.md)
+[Volver al indice](/)
 
 ---
 
@@ -24,7 +24,7 @@ Consumidor → Kong (API Gateway) → Microservicio VIP → Backend
 
 ### 3.1 Services
 
-El nombre del service en Kong debe coincidir con el nombre del microservicio definido en el estandar [SF-NM](nombramiento-microservicios-colas.md).
+El nombre del service en Kong debe coincidir con el nombre del microservicio definido en el estandar [SF-NM](estandares/nombramiento-microservicios-colas.md).
 
 **Patron:**
 
@@ -108,7 +108,7 @@ Todos los routes deben tener habilitado el plugin de autenticacion contra Keyclo
 | Plugin | `request-transformer` |
 | Headers a inyectar | `X-Request-Id` (UUID), `X-Correlation-Id` |
 
-El header `X-Correlation-Id` debe propagarse en toda la cadena de microservicios para trazabilidad de extremo a extremo. Corresponde al campo `Id_Mensaje` del [Canonical](canonical.md).
+El header `X-Correlation-Id` debe propagarse en toda la cadena de microservicios para trazabilidad de extremo a extremo. Corresponde al campo `Id_Mensaje` del [Canonical](contratos/canonical.md).
 
 ### 4.4 Logging
 
@@ -144,7 +144,7 @@ El header `X-Correlation-Id` debe propagarse en toda la cadena de microservicios
 
 ## 6. Manejo de Errores en Kong
 
-Cuando Kong no puede enrutar una solicitud, debe retornar la estructura de error estandar del [SF-IN](manejo-errores.md):
+Cuando Kong no puede enrutar una solicitud, debe retornar la estructura de error estandar del [SF-IN](contratos/manejo-errores.md):
 
 ### Gateway no disponible (503)
 
@@ -190,8 +190,8 @@ Cuando Kong no puede enrutar una solicitud, debe retornar la estructura de error
 
 ## 7. Consideraciones Generales
 
-- Kong debe desplegarse en el namespace `vip-gateway` (ver [Namespaces](lineamientos-namespaces.md)).
+- Kong debe desplegarse en el namespace `vip-gateway` (ver [Namespaces](infraestructura/lineamientos-namespaces.md)).
 - Los services de Kong apuntan a los ClusterIP services de Kubernetes, nunca a pods directamente.
 - La configuracion de Kong debe gestionarse como **codigo** (declarativa) usando `deck` o CRDs de Kong Ingress Controller.
 - Los certificados TLS se terminan en Kong (TLS termination). La comunicacion interna entre Kong y microservicios es HTTP dentro del cluster.
-- Documentar toda ruta nueva en el [Inventario de Servicios](inventario-servicios.md).
+- Documentar toda ruta nueva en el [Inventario de Servicios](inventario/inventario-servicios.md).

@@ -1,6 +1,6 @@
 # Lineamientos de Manifiestos Kubernetes
 
-[Volver al indice](index.md)
+[Volver al indice](/)
 
 ---
 
@@ -29,7 +29,7 @@ k8s/
 
 ### 3.1 Nombramiento
 
-El nombre del Deployment debe coincidir con el nombre del microservicio del estandar [SF-NM](nombramiento-microservicios-colas.md).
+El nombre del Deployment debe coincidir con el nombre del microservicio del estandar [SF-NM](estandares/nombramiento-microservicios-colas.md).
 
 ```yaml
 apiVersion: apps/v1

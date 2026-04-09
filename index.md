@@ -1,25 +1,43 @@
 # Wiki de Lineamientos VIP
 
-**Vortex Integration Platform (VIP)** — Alcaldia de Medellin
-
+**Vortex Integration Platform (VIP)** — Alcaldia de Medellin  
 Plataforma de interoperabilidad para el dominio catastral LADM-COL 4.1.
 
 ---
 
-## Documentos
+## Perfil Funcional
 
-| # | Documento | Descripcion |
-|---|-----------|-------------|
-| 1 | [Lineamientos de Interoperabilidad](lineamientos-interoperabilidad.md) | Documento maestro con todos los lineamientos de la capa de interoperabilidad |
-| 2 | [Canonical de Interoperabilidad](canonical.md) | Estructura estandar de Request y Response para todos los servicios |
-| 3 | [Manejo de Errores](manejo-errores.md) | Estrategias, clasificacion y catalogo de codigos de error |
-| 4 | [Nombramiento de Microservicios y Colas](nombramiento-microservicios-colas.md) | Convenciones de nombres para microservicios, exchanges, queues y routing keys de RabbitMQ |
-| 5 | [Estandar de Cache Redis](cache-redis.md) | Estrategias, convenciones de keys y politicas de TTL |
-| 6 | [Guia de Documentacion de Servicios](guia-documentacion.md) | Tips y lineamientos para documentar servicios de interoperabilidad |
-| 7 | [Lineamientos Kong API Gateway](lineamientos-kong.md) | Configuracion de routes, plugins, autenticacion y rate limiting |
-| 8 | [Lineamientos Manifiestos K8s](lineamientos-k8s.md) | Deployments, probes (liveness/readiness), Swagger, HPA y resources |
-| 9 | [Lineamientos de Namespaces](lineamientos-namespaces.md) | Convencion de namespaces, Network Policies y Resource Quotas |
-| 10 | [Inventario de Servicios](inventario-servicios.md) | Catalogo de microservicios con dependencias, endpoints y colas |
+Si documentas servicios, defines contratos de API o necesitas entender la estructura de los mensajes:
+
+| Documento | Para que lo necesitas |
+|-----------|----------------------|
+| [Canonical](contratos/canonical.md) | Estructura de Request y Response que usan todos los servicios |
+| [Manejo de Errores](contratos/manejo-errores.md) | Tipos de error, codigos y mensajes que retorna la plataforma |
+| [Guia de Documentacion](guias/guia-documentacion.md) | Como documentar un servicio nuevo o un control de cambios |
+| [Inventario de Servicios](inventario/inventario-servicios.md) | Que servicios existen, sus endpoints y dependencias |
+
+## Perfil Tecnico
+
+Si desarrollas, configuras infraestructura o despliegas microservicios:
+
+| Documento | Para que lo necesitas |
+|-----------|----------------------|
+| [Nombramiento de Microservicios y Colas](estandares/nombramiento-microservicios-colas.md) | Patron de 4 segmentos, colas RabbitMQ, eventos |
+| [Cache Redis](estandares/cache-redis.md) | Keys, TTL, estrategias de invalidacion |
+| [Kong API Gateway](infraestructura/lineamientos-kong.md) | Routes, plugins, autenticacion, rate limiting |
+| [Manifiestos K8s](infraestructura/lineamientos-k8s.md) | Deployments, probes, Swagger, HPA |
+| [Namespaces](infraestructura/lineamientos-namespaces.md) | Convencion de namespaces, Network Policies |
+
+## Referencia Rapida
+
+| Concepto | Patron |
+|----------|--------|
+| Microservicio | `{prefijo}-{namespace}-{componente}-{funcionalidad}` |
+| Redis Key | `{prefijo}:{dominio}:{entidad}:{identificador}` |
+| RabbitMQ Queue | `{prefijo}.{dominio}.{accion}.queue` |
+| Routing Key | `{prefijo}.{dominio}.{accion}.{evento}` |
+| Namespace K8s | `{prefijo}-{dominio}` |
+| Route Kong | `/{prefijo}/{dominio}/{recurso}` |
 
 ---
 

@@ -1,6 +1,6 @@
 # Inventario de Servicios y Dependencias
 
-[Volver al indice](index.md)
+[Volver al indice](/)
 
 ---
 
@@ -156,6 +156,6 @@ Al agregar un nuevo microservicio a la plataforma:
 2. Actualizar la **Matriz de Dependencias** (seccion 3).
 3. Documentar sus **Endpoints** (seccion 4).
 4. Registrar sus **Colas** si aplica (seccion 5).
-5. Actualizar el catalogo de [Namespaces](lineamientos-namespaces.md) si se crea uno nuevo.
-6. Registrar las routes en [Kong](lineamientos-kong.md).
-7. Actualizar el catalogo de [Microservicios](nombramiento-microservicios-colas.md) del SF-NM.
+5. Actualizar el catalogo de [Namespaces](infraestructura/lineamientos-namespaces.md) si se crea uno nuevo.
+6. Registrar las routes en [Kong](infraestructura/lineamientos-kong.md).
+7. Actualizar el catalogo de [Microservicios](estandares/nombramiento-microservicios-colas.md) del SF-NM.
