@@ -9,6 +9,8 @@
   - [Kong API Gateway](infraestructura/lineamientos-kong.md)
   - [Manifiestos K8s](infraestructura/lineamientos-k8s.md)
   - [Namespaces](infraestructura/lineamientos-namespaces.md)
+  - [Observabilidad](infraestructura/lineamientos-observabilidad.md)
+  - [Seguridad](infraestructura/lineamientos-seguridad.md)
 - **Guias**
   - [Documentacion de Servicios](guias/guia-documentacion.md)
 - **Inventario**

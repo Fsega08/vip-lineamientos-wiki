@@ -27,18 +27,32 @@ Definir la convencion estandar de nombramiento de namespaces en Kubernetes (EKS)
 
 ## 3. Catalogo de Namespaces
 
+### 3.1 Namespaces de Dominio (estandarizados)
+
+Estos namespaces siguen el patron `{prefijo}-{dominio}` y son obligatorios para todos los despliegues VIP. Contienen los microservicios de negocio.
+
 | Namespace | Tipo | Servicios que contiene |
 |-----------|------|----------------------|
-| `vip-gateway` | Plataforma | vip-gateway-gateway-proxy (Kong) |
 | `vip-catastro` | Dominio | vip-catastro-service-consulta, vip-catastro-service-mutacion |
 | `vip-geo` | Dominio | vip-geo-service-geometrias |
 | `vip-urbanismo` | Dominio | vip-urbanismo-service-licencias |
 | `vip-hacienda` | Dominio | vip-hacienda-service-predial |
-| `vip-infra` | Infraestructura | Redis, RabbitMQ, PostgreSQL/PostGIS, Keycloak |
-| `vip-observabilidad` | Plataforma | Prometheus, Grafana, Loki, Jaeger |
 | `vip-archivos` | Plataforma | vip-archivos-service-archivo |
 | `vip-notificaciones` | Plataforma | vip-notificaciones-service-notificacion |
-| `vip-workflow` | Plataforma | Camunda, vip-workflow-engine-camunda |
+
+### 3.2 Namespaces de Infraestructura (definidos por el despliegue)
+
+Estos namespaces contienen componentes de infraestructura compartida. Sus nombres pueden variar segun la herramienta de despliegue (Terraform, Helm, etc.) y no deben contener microservicios de negocio.
+
+| Namespace | Componente | Notas |
+|-----------|------------|-------|
+| `kong` | API Gateway (Kong) | Ingress controller, routes, plugins |
+| `keycloak` | Gestion de identidad | Autenticacion OIDC, roles, realms |
+| `vault` | Gestion de secretos | KMS auto-unseal, almacenamiento seguro |
+| `rabbitmq-system` | Mensajeria | RabbitMQ Cluster Operator, exchanges, queues |
+| `redis` | Cache | Standalone (dev) o replication con sentinel (qa/prod) |
+| `monitoring` | Observabilidad | Prometheus, Grafana, Loki, Promtail |
+| `keda` | Autoscaling por eventos | Escalamiento basado en metricas de colas/HTTP |
 
 ---
 

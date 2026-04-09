@@ -27,6 +27,8 @@ Si desarrollas, configuras infraestructura o despliegas microservicios:
 | [Kong API Gateway](infraestructura/lineamientos-kong.md) | Routes, plugins, autenticacion, rate limiting |
 | [Manifiestos K8s](infraestructura/lineamientos-k8s.md) | Deployments, probes, Swagger, HPA |
 | [Namespaces](infraestructura/lineamientos-namespaces.md) | Convencion de namespaces, Network Policies |
+| [Observabilidad](infraestructura/lineamientos-observabilidad.md) | Metricas, logs, alertas, dashboards Grafana |
+| [Seguridad](infraestructura/lineamientos-seguridad.md) | Keycloak, Vault, TLS, proteccion de datos |
 
 ## Referencia Rapida
 

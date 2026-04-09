@@ -130,11 +130,24 @@ Cuando una key expira y multiples requests simultaneos intentan consultar el mis
 
 ---
 
-## 7. Consideraciones Generales
+## 7. Arquitectura por Ambiente
+
+| Ambiente | Arquitectura | Replicas | Sentinel | Failover |
+|----------|-------------|----------|----------|----------|
+| Dev | **Standalone** | 1 | No | No |
+| QA | **Replication** | 2 (master + replica) | Si | Automatico |
+| Prod | **Replication** | 2+ (master + replicas) | Si | Automatico |
+
+- En **dev** se usa una instancia unica para simplificar el desarrollo.
+- En **QA y produccion** se usa replication con Sentinel para garantizar alta disponibilidad y failover automatico.
+- La aplicacion debe conectarse usando el **servicio de Sentinel** (no directamente al master) para soportar failover transparente.
+
+---
+
+## 8. Consideraciones Generales
 
 - Toda key de Redis debe tener un TTL configurado. No se permiten keys permanentes.
 - La convencion de keys usa el mismo prefijo configurable definido en el estandar SF-NM.
-- Se recomienda **Redis Cluster** para produccion con alta disponibilidad.
 - La serializacion debe usar **JSON** (no serializacion binaria de Java) para facilitar depuracion.
 - En Spring Boot, configurar **Spring Cache con RedisCacheManager** y los TTL por categoria.
 - La invalidacion activa por evento requiere que los productores publiquen en RabbitMQ.
