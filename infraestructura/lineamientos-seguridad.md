@@ -32,7 +32,7 @@ El JWT contiene los claims necesarios para autorizacion:
 | `sub` | Identificador unico del usuario | `f47ac10b-58cc-4372-a567-0e02b2c3d479` |
 | `preferred_username` | Nombre de usuario | `usuario.prueba` |
 | `realm_access.roles` | Roles del usuario en el realm | `["catastro-consulta", "catastro-mutacion"]` |
-| `resource_access` | Roles por cliente/servicio | `{"vip-catastro": {"roles": ["lector"]}}` |
+| `resource_access` | Roles por cliente/servicio | `{"acm-catastro": {"roles": ["lector"]}}` |
 | `exp` | Expiracion del token (epoch) | `1712400000` |
 
 ### 2.3 Validacion en el Microservicio
@@ -105,7 +105,7 @@ Los siguientes endpoints estan exentos de autenticacion en Kong:
 
 ### 4.3 Comunicacion entre Dominios
 
-Si un microservicio necesita comunicarse con otro de un namespace diferente (ej: `vip-hacienda-service-predial` → `vip-catastro-service-consulta`), se debe crear una NetworkPolicy explicita. Ver [matriz de comunicacion](infraestructura/lineamientos-namespaces.md).
+Si un microservicio necesita comunicarse con otro de un namespace diferente (ej: `acm-hacienda-service-predial` → `acm-catastro-service-consulta`), se debe crear una NetworkPolicy explicita. Ver [matriz de comunicacion](infraestructura/lineamientos-namespaces.md).
 
 ---
 

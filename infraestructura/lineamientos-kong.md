@@ -34,11 +34,11 @@ El nombre del service en Kong debe coincidir con el nombre del microservicio def
 
 | Service Kong | Microservicio Destino | Puerto |
 |--------------|----------------------|--------|
-| `vip-catastro-service-consulta` | vip-catastro-service-consulta | 8080 |
-| `vip-catastro-service-mutacion` | vip-catastro-service-mutacion | 8080 |
-| `vip-geo-service-geometrias` | vip-geo-service-geometrias | 8080 |
-| `vip-urbanismo-service-licencias` | vip-urbanismo-service-licencias | 8080 |
-| `vip-hacienda-service-predial` | vip-hacienda-service-predial | 8080 |
+| `acm-catastro-service-consulta` | acm-catastro-service-consulta | 8080 |
+| `acm-catastro-service-mutacion` | acm-catastro-service-mutacion | 8080 |
+| `acm-geo-service-geometrias` | acm-geo-service-geometrias | 8080 |
+| `acm-urbanismo-service-licencias` | acm-urbanismo-service-licencias | 8080 |
+| `acm-hacienda-service-predial` | acm-hacienda-service-predial | 8080 |
 
 **URL del upstream:**
 
@@ -49,7 +49,7 @@ http://{service-name}.{namespace}.svc.cluster.local:{puerto}
 Ejemplo:
 
 ```
-http://vip-catastro-service-consulta.vip-catastro.svc.cluster.local:8080
+http://acm-catastro-service-consulta.acm-catastro.svc.cluster.local:8080
 ```
 
 ### 3.2 Routes
@@ -62,18 +62,18 @@ http://vip-catastro-service-consulta.vip-catastro.svc.cluster.local:8080
 
 | Route | Service | Metodos |
 |-------|---------|---------|
-| `/vip/catastro/v1/predios` | vip-catastro-service-consulta | GET, POST |
-| `/vip/catastro/v1/mutaciones` | vip-catastro-service-mutacion | POST, PUT |
-| `/vip/geo/v1/geometrias` | vip-geo-service-geometrias | GET, POST |
-| `/vip/urbanismo/v1/licencias` | vip-urbanismo-service-licencias | GET, POST |
-| `/vip/hacienda/v1/predial` | vip-hacienda-service-predial | GET, POST |
+| `/acm/catastro/v1/predios` | acm-catastro-service-consulta | GET, POST |
+| `/acm/catastro/v1/mutaciones` | acm-catastro-service-mutacion | POST, PUT |
+| `/acm/geo/v1/geometrias` | acm-geo-service-geometrias | GET, POST |
+| `/acm/urbanismo/v1/licencias` | acm-urbanismo-service-licencias | GET, POST |
+| `/acm/hacienda/v1/predial` | acm-hacienda-service-predial | GET, POST |
 
 **Reglas:**
 
 - Todas las rutas inician con `/{prefijo}/{version}/`. Ver [Versionamiento de API](estandares/versionamiento-api.md).
 - Los recursos se nombran en **plural** y **minusculas**.
 - No incluir verbos en la ruta (el metodo HTTP indica la accion).
-- Usar path parameters para identificadores: `/vip/catastro/v1/predios/{npn}`.
+- Usar path parameters para identificadores: `/acm/catastro/v1/predios/{npn}`.
 
 ---
 
@@ -159,7 +159,7 @@ Cuando Kong no puede enrutar una solicitud, debe retornar la estructura de error
       "Codigo_Error": "SYS-002",
       "Ruta": null,
       "Mensaje": "El servicio no esta disponible temporalmente.",
-      "Origen": "vip-gateway-gateway-proxy"
+      "Origen": "acm-gateway-gateway-proxy"
     }
   ],
   "Datos_Operacion": {}
@@ -179,7 +179,7 @@ Cuando Kong no puede enrutar una solicitud, debe retornar la estructura de error
       "Codigo_Error": "BIZ-005",
       "Ruta": null,
       "Mensaje": "Se han realizado demasiadas solicitudes. Intente mas tarde.",
-      "Origen": "vip-gateway-gateway-proxy"
+      "Origen": "acm-gateway-gateway-proxy"
     }
   ],
   "Datos_Operacion": {}
@@ -190,7 +190,7 @@ Cuando Kong no puede enrutar una solicitud, debe retornar la estructura de error
 
 ## 7. Consideraciones Generales
 
-- Kong debe desplegarse en el namespace `vip-gateway` (ver [Namespaces](infraestructura/lineamientos-namespaces.md)).
+- Kong debe desplegarse en el namespace `acm-gateway` (ver [Namespaces](infraestructura/lineamientos-namespaces.md)).
 - Los services de Kong apuntan a los ClusterIP services de Kubernetes, nunca a pods directamente.
 - La configuracion de Kong debe gestionarse como **codigo** (declarativa) usando `deck` o CRDs de Kong Ingress Controller.
 - Los certificados TLS se terminan en Kong (TLS termination). La comunicacion interna entre Kong y microservicios es HTTP dentro del cluster.

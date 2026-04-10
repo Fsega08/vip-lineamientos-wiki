@@ -35,10 +35,10 @@ El nombre del Deployment debe coincidir con el nombre del microservicio del esta
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: vip-catastro-service-consulta
-  namespace: vip-catastro
+  name: acm-catastro-service-consulta
+  namespace: acm-catastro
   labels:
-    app: vip-catastro-service-consulta
+    app: acm-catastro-service-consulta
     domain: catastro
     team: interoperabilidad
     version: "1.0.0"
@@ -46,22 +46,22 @@ spec:
   replicas: 2
   selector:
     matchLabels:
-      app: vip-catastro-service-consulta
+      app: acm-catastro-service-consulta
   template:
     metadata:
       labels:
-        app: vip-catastro-service-consulta
+        app: acm-catastro-service-consulta
         domain: catastro
     spec:
       containers:
-        - name: vip-catastro-service-consulta
-          image: registry.vortexbird.com/vip/vip-catastro-service-consulta:1.0.0
+        - name: acm-catastro-service-consulta
+          image: registry.vortexbird.com/vip/acm-catastro-service-consulta:1.0.0
           ports:
             - containerPort: 8080
               name: http
           envFrom:
             - configMapRef:
-                name: vip-catastro-service-consulta-config
+                name: acm-catastro-service-consulta-config
           resources:
             requests:
               cpu: "250m"
@@ -98,7 +98,7 @@ spec:
 
 | Label | Descripcion | Ejemplo |
 |-------|-------------|---------|
-| `app` | Nombre del microservicio | `vip-catastro-service-consulta` |
+| `app` | Nombre del microservicio | `acm-catastro-service-consulta` |
 | `domain` | Dominio funcional | `catastro`, `geo`, `gateway` |
 | `team` | Equipo responsable | `interoperabilidad` |
 | `version` | Version del despliegue | `1.0.0` |
@@ -237,8 +237,8 @@ Kong debe enrutar las peticiones de Swagger sin autenticacion:
 
 | Route | Service | Auth |
 |-------|---------|------|
-| `/vip/catastro/v1/consulta/swagger-ui.html` | vip-catastro-service-consulta | No |
-| `/vip/catastro/v1/consulta/v3/api-docs` | vip-catastro-service-consulta | No |
+| `/acm/catastro/v1/consulta/swagger-ui.html` | acm-catastro-service-consulta | No |
+| `/acm/catastro/v1/consulta/v3/api-docs` | acm-catastro-service-consulta | No |
 
 ---
 
@@ -248,14 +248,14 @@ Kong debe enrutar las peticiones de Swagger sin autenticacion:
 apiVersion: v1
 kind: Service
 metadata:
-  name: vip-catastro-service-consulta
-  namespace: vip-catastro
+  name: acm-catastro-service-consulta
+  namespace: acm-catastro
   labels:
-    app: vip-catastro-service-consulta
+    app: acm-catastro-service-consulta
 spec:
   type: ClusterIP
   selector:
-    app: vip-catastro-service-consulta
+    app: acm-catastro-service-consulta
   ports:
     - name: http
       port: 8080
@@ -276,15 +276,15 @@ spec:
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: vip-catastro-service-consulta-config
-  namespace: vip-catastro
+  name: acm-catastro-service-consulta-config
+  namespace: acm-catastro
 data:
   SPRING_PROFILES_ACTIVE: "dev"
-  PLATAFORMA_PREFIJO: "vip"
+  PLATAFORMA_PREFIJO: "acm"
   PLATAFORMA_CACHE_TTL_PARAMETRICOS: "86400"
   PLATAFORMA_CACHE_TTL_CONSULTA: "3600"
-  RABBITMQ_HOST: "rabbitmq.vip-infra.svc.cluster.local"
-  REDIS_HOST: "redis.vip-infra.svc.cluster.local"
+  RABBITMQ_HOST: "rabbitmq.acm-infra.svc.cluster.local"
+  REDIS_HOST: "redis.acm-infra.svc.cluster.local"
 ```
 
 **Reglas:**
@@ -300,13 +300,13 @@ data:
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
-  name: vip-catastro-service-consulta
-  namespace: vip-catastro
+  name: acm-catastro-service-consulta
+  namespace: acm-catastro
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: vip-catastro-service-consulta
+    name: acm-catastro-service-consulta
   minReplicas: 2
   maxReplicas: 6
   metrics:

@@ -112,7 +112,7 @@
       "Codigo_Error": "VLD-001",
       "Ruta": "/Datos_Operacion/Numero_Documento",
       "Mensaje": "El campo Numero_Documento es obligatorio.",
-      "Origen": "vip-gateway"
+      "Origen": "acm-gateway"
     }
   ],
   "Datos_Operacion": {}

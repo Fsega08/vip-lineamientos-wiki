@@ -19,7 +19,7 @@ Definir la convencion estandar de nombramiento de namespaces en Kubernetes (EKS)
 **Reglas:**
 
 - Todo en **minusculas**, formato **kebab-case**.
-- El prefijo es el mismo configurable del estandar SF-NM (`vip` para Alcaldia de Medellin).
+- El prefijo es el mismo configurable del estandar SF-NM (`acm` para Alcaldia de Medellin).
 - Un namespace por **dominio funcional**.
 - Los servicios de infraestructura compartida van en un namespace dedicado `{prefijo}-infra`.
 
@@ -33,12 +33,12 @@ Estos namespaces siguen el patron `{prefijo}-{dominio}` y son obligatorios para 
 
 | Namespace | Tipo | Servicios que contiene |
 |-----------|------|----------------------|
-| `vip-catastro` | Dominio | vip-catastro-service-consulta, vip-catastro-service-mutacion |
-| `vip-geo` | Dominio | vip-geo-service-geometrias |
-| `vip-urbanismo` | Dominio | vip-urbanismo-service-licencias |
-| `vip-hacienda` | Dominio | vip-hacienda-service-predial |
-| `vip-archivos` | Plataforma | vip-archivos-service-archivo |
-| `vip-notificaciones` | Plataforma | vip-notificaciones-service-notificacion |
+| `acm-catastro` | Dominio | acm-catastro-service-consulta, acm-catastro-service-mutacion |
+| `acm-geo` | Dominio | acm-geo-service-geometrias |
+| `acm-urbanismo` | Dominio | acm-urbanismo-service-licencias |
+| `acm-hacienda` | Dominio | acm-hacienda-service-predial |
+| `acm-archivos` | Plataforma | acm-archivos-service-archivo |
+| `acm-notificaciones` | Plataforma | acm-notificaciones-service-notificacion |
 
 ### 3.2 Namespaces de Infraestructura (definidos por el despliegue)
 
@@ -66,10 +66,10 @@ http://{microservicio}.{namespace}.svc.cluster.local:{puerto}
 
 | Microservicio | Namespace | URL Interna |
 |---------------|-----------|-------------|
-| vip-catastro-service-consulta | vip-catastro | `http://vip-catastro-service-consulta.vip-catastro.svc.cluster.local:8080` |
-| vip-catastro-service-mutacion | vip-catastro | `http://vip-catastro-service-mutacion.vip-catastro.svc.cluster.local:8080` |
-| vip-geo-service-geometrias | vip-geo | `http://vip-geo-service-geometrias.vip-geo.svc.cluster.local:8080` |
-| vip-gateway-gateway-proxy | vip-gateway | `http://vip-gateway-gateway-proxy.vip-gateway.svc.cluster.local:80` |
+| acm-catastro-service-consulta | acm-catastro | `http://acm-catastro-service-consulta.acm-catastro.svc.cluster.local:8080` |
+| acm-catastro-service-mutacion | acm-catastro | `http://acm-catastro-service-mutacion.acm-catastro.svc.cluster.local:8080` |
+| acm-geo-service-geometrias | acm-geo | `http://acm-geo-service-geometrias.acm-geo.svc.cluster.local:8080` |
+| acm-gateway-gateway-proxy | acm-gateway | `http://acm-gateway-gateway-proxy.acm-gateway.svc.cluster.local:80` |
 
 ---
 
@@ -84,7 +84,7 @@ apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
   name: deny-all
-  namespace: vip-catastro
+  namespace: acm-catastro
 spec:
   podSelector: {}
   policyTypes:
@@ -99,7 +99,7 @@ apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
   name: allow-from-gateway
-  namespace: vip-catastro
+  namespace: acm-catastro
 spec:
   podSelector: {}
   policyTypes:
@@ -108,7 +108,7 @@ spec:
     - from:
         - namespaceSelector:
             matchLabels:
-              name: vip-gateway
+              name: kong
       ports:
         - port: 8080
           protocol: TCP
@@ -121,7 +121,7 @@ apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
   name: allow-to-infra
-  namespace: vip-catastro
+  namespace: acm-catastro
 spec:
   podSelector: {}
   policyTypes:
@@ -130,7 +130,7 @@ spec:
     - to:
         - namespaceSelector:
             matchLabels:
-              name: vip-infra
+              name: acm-infra
       ports:
         - port: 5432    # PostgreSQL
           protocol: TCP
@@ -159,8 +159,8 @@ Cada namespace debe tener cuotas de recursos para evitar que un dominio consuma 
 apiVersion: v1
 kind: ResourceQuota
 metadata:
-  name: vip-catastro-quota
-  namespace: vip-catastro
+  name: acm-catastro-quota
+  namespace: acm-catastro
 spec:
   hard:
     requests.cpu: "4"
@@ -172,11 +172,11 @@ spec:
 
 | Namespace | CPU Requests | Memory Requests | Max Pods |
 |-----------|-------------|-----------------|----------|
-| vip-gateway | 2 | 4Gi | 10 |
-| vip-catastro | 4 | 8Gi | 20 |
-| vip-geo | 4 | 8Gi | 15 |
-| vip-infra | 8 | 16Gi | 20 |
-| vip-observabilidad | 4 | 8Gi | 15 |
+| acm-gateway | 2 | 4Gi | 10 |
+| acm-catastro | 4 | 8Gi | 20 |
+| acm-geo | 4 | 8Gi | 15 |
+| acm-infra | 8 | 16Gi | 20 |
+| acm-observabilidad | 4 | 8Gi | 15 |
 
 > Los valores son iniciales y deben ajustarse segun el uso real observado en produccion.
 
@@ -190,9 +190,9 @@ Cada namespace debe tener labels estandar para facilitar Network Policies y oper
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: vip-catastro
+  name: acm-catastro
   labels:
-    name: vip-catastro
+    name: acm-catastro
     platform: vip
     type: domain        # domain | infra | platform | observability
     environment: dev    # dev | qa | prod
@@ -203,6 +203,6 @@ metadata:
 ## 8. Consideraciones Generales
 
 - No crear namespaces adicionales sin actualizar este catalogo y el [Inventario de Servicios](inventario/inventario-servicios.md).
-- Los ambientes (dev, qa, prod) se separan por **cluster**, no por namespace. El mismo namespace `vip-catastro` existe en los 3 clusters.
+- Los ambientes (dev, qa, prod) se separan por **cluster**, no por namespace. El mismo namespace `acm-catastro` existe en los 3 clusters.
 - El namespace `default` de Kubernetes **no debe usarse** para cargas de trabajo VIP.
-- Los namespaces de infraestructura (`vip-infra`) no deben contener microservicios de negocio.
+- Los namespaces de infraestructura (`acm-infra`) no deben contener microservicios de negocio.

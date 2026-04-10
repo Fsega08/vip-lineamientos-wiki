@@ -70,9 +70,9 @@ graph TB
     end
 
     subgraph Microservicios VIP
-        CC[vip-catastro<br>service-consulta]
-        CM[vip-catastro<br>service-mutacion]
-        GS[vip-geo<br>service-geometrias]
+        CC[acm-catastro<br>service-consulta]
+        CM[acm-catastro<br>service-mutacion]
+        GS[acm-geo<br>service-geometrias]
     end
 
     subgraph Infraestructura
@@ -123,7 +123,7 @@ sequenceDiagram
     participant RD as Redis
     participant BE as Backend
 
-    C->>K: POST /vip/catastro/v1/predios<br>Authorization: Bearer {JWT}
+    C->>K: POST /acm/catastro/v1/predios<br>Authorization: Bearer {JWT}
     K->>K: Validar JWT (Keycloak)
     K->>K: Inyectar X-Correlation-Id
 
@@ -138,7 +138,7 @@ sequenceDiagram
         MS-->>C: 400 VALIDACION (VLD-001..009)
     end
 
-    MS->>RD: GET vip:catastro:predio:{npn}
+    MS->>RD: GET acm:catastro:predio:{npn}
 
     alt Cache HIT
         RD-->>MS: Datos cacheados
@@ -153,7 +153,7 @@ sequenceDiagram
     end
 
     BE-->>MS: Respuesta exitosa
-    MS->>RD: SET vip:catastro:predio:{npn} TTL 1h
+    MS->>RD: SET acm:catastro:predio:{npn} TTL 1h
     MS->>MS: Mapear a Canonical
     MS-->>C: 200 + Datos_Operacion
 ```
@@ -188,15 +188,15 @@ flowchart TD
 
 ```mermaid
 sequenceDiagram
-    participant CM as vip-catastro<br>service-mutacion
+    participant CM as acm-catastro<br>service-mutacion
     participant RQ as RabbitMQ
-    participant CC as vip-catastro<br>service-consulta
+    participant CC as acm-catastro<br>service-consulta
     participant RD as Redis
 
     CM->>CM: Mutacion exitosa en backend
-    CM->>RQ: Publish vip.catastro.predio.actualizado
+    CM->>RQ: Publish acm.catastro.predio.actualizado
     RQ->>CC: Consume evento
-    CC->>RD: DEL vip:catastro:predio:{npn}
+    CC->>RD: DEL acm:catastro:predio:{npn}
     Note over CC,RD: Siguiente consulta<br>traera dato fresco
 ```
 

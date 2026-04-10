@@ -21,9 +21,9 @@ Las APIs de VIP usan **versionamiento por dominio en el path** del URL. La versi
 Ejemplos:
 
 ```
-/vip/catastro/v1/predios
-/vip/catastro/v2/predios
-/vip/geo/v1/geometrias
+/acm/catastro/v1/predios
+/acm/catastro/v2/predios
+/acm/geo/v1/geometrias
 ```
 
 > Catastro puede estar en v2 mientras geo sigue en v1. Cada dominio versiona a su propio ritmo.
@@ -55,7 +55,7 @@ Ejemplos:
 | Cambiar tipo de dato de un campo | **Si** | Cambiar `Avaluo` de string a number |
 | Cambiar nombre de un campo | **Si** | Renombrar `Nro_Predial` a `Numero_Predial` |
 | Cambiar estructura del Canonical | **Si** | Reestructurar `Datos_Operacion` |
-| Agregar nuevo endpoint | No | Agregar `/vip/catastro/v1/predios/historico` |
+| Agregar nuevo endpoint | No | Agregar `/acm/catastro/v1/predios/historico` |
 | Cambiar comportamiento de endpoint existente | **Si** | Cambiar logica de consulta que retorna datos diferentes |
 
 ### 3.2 Regla de compatibilidad
@@ -77,9 +77,9 @@ Cada version se registra como un route independiente apuntando al mismo service 
 
 | Route | Service | Version |
 |-------|---------|---------|
-| `/vip/catastro/v1/predios` | vip-catastro-service-consulta | v1 |
-| `/vip/catastro/v2/predios` | vip-catastro-service-consulta-v2 | v2 |
-| `/vip/geo/v1/geometrias` | vip-geo-service-geometrias | v1 |
+| `/acm/catastro/v1/predios` | acm-catastro-service-consulta | v1 |
+| `/acm/catastro/v2/predios` | acm-catastro-service-consulta-v2 | v2 |
+| `/acm/geo/v1/geometrias` | acm-geo-service-geometrias | v1 |
 
 Si la nueva version es compatible internamente (misma logica, diferente contrato), el microservicio puede manejar ambas versiones con un path mapping interno.
 
@@ -90,7 +90,7 @@ Si la nueva version es compatible internamente (misma logica, diferente contrato
 Las imagenes Docker siguen **Semantic Versioning** (semver):
 
 ```
-registry.vortexbird.com/vip/vip-catastro-service-consulta:1.2.3
+registry.vortexbird.com/vip/acm-catastro-service-consulta:1.2.3
 ```
 
 | Segmento | Significado | Ejemplo |

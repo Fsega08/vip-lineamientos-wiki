@@ -34,13 +34,13 @@ El separador dos puntos (`:`) es el estandar de Redis, permite agrupar y visuali
 
 | Key | Descripcion | TTL |
 |-----|-------------|-----|
-| `vip:catastro:predio:{npn}` | Datos del predio por NPN (Numero Predial Nacional) | 1 hora |
-| `vip:catastro:avaluo:{id_predio}` | Avaluo catastral vigente | 24 horas |
-| `vip:geo:municipio:{cod_municipio}:limites` | Geometria de limites del municipio | 7 dias |
-| `vip:parametros:tipos-mutacion` | Lista de tipos de mutacion catastral | 24 horas |
-| `vip:parametros:departamentos` | Lista de departamentos de Colombia | 30 dias |
-| `vip:parametros:ciudades:{cod_depto}` | Ciudades de un departamento | 30 dias |
-| `vip:catastro:consulta:{hash_request}` | Resultado cacheado de consulta frecuente | 30 min |
+| `acm:catastro:predio:{npn}` | Datos del predio por NPN (Numero Predial Nacional) | 1 hora |
+| `acm:catastro:avaluo:{id_predio}` | Avaluo catastral vigente | 24 horas |
+| `acm:geo:municipio:{cod_municipio}:limites` | Geometria de limites del municipio | 7 dias |
+| `acm:parametros:tipos-mutacion` | Lista de tipos de mutacion catastral | 24 horas |
+| `acm:parametros:departamentos` | Lista de departamentos de Colombia | 30 dias |
+| `acm:parametros:ciudades:{cod_depto}` | Ciudades de un departamento | 30 dias |
+| `acm:catastro:consulta:{hash_request}` | Resultado cacheado de consulta frecuente | 30 min |
 
 ---
 
@@ -84,10 +84,10 @@ Cuando un microservicio modifica un dato, publica un evento en RabbitMQ. El serv
 
 **Ejemplo:**
 
-1. El microservicio `vip-catastro-service-mutacion` actualiza un predio.
-2. Publica evento en routing key: `vip.catastro.predio.actualizado`
-3. El microservicio `vip-catastro-service-consulta` escucha el evento.
-4. Borra la key `vip:catastro:predio:{npn}` de Redis.
+1. El microservicio `acm-catastro-service-mutacion` actualiza un predio.
+2. Publica evento en routing key: `acm.catastro.predio.actualizado`
+3. El microservicio `acm-catastro-service-consulta` escucha el evento.
+4. Borra la key `acm:catastro:predio:{npn}` de Redis.
 5. El siguiente request consultara el dato fresco al backend y lo recacheara.
 
 **Aplica para:**

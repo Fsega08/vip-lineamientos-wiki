@@ -32,7 +32,7 @@
 | **Canonical** | Estructura de mensaje estandar (request/response) que todos los servicios VIP deben usar. Ver [Canonical](contratos/canonical.md) |
 | **Capa de interoperabilidad** | Conjunto de microservicios que median entre consumidores externos y backends internos/externos. No contienen logica de negocio propia, traducen y enrutan |
 | **Adaptador** | Componente que traduce la comunicacion entre VIP y un backend externo (IGAC, SNR). Mapea formatos, errores y protocolos |
-| **Prefijo** | Identificador configurable del proyecto. Para Alcaldia de Medellin es `vip`. Se usa en nombres de microservicios, queues, keys de Redis y namespaces |
+| **Prefijo** | Identificador configurable del proyecto. Para Alcaldia de Medellin es `acm`. Se usa en nombres de microservicios, queues, keys de Redis y namespaces |
 | **Datos_Operacion** | Seccion del Canonical que contiene los datos especificos de cada servicio. Su estructura varia por endpoint |
 
 ## Terminos Tecnicos

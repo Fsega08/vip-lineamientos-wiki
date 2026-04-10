@@ -37,13 +37,13 @@ flowchart TD
 
 ```bash
 # 1. Ver estado del pod
-kubectl get pods -n vip-catastro
+kubectl get pods -n acm-catastro
 
 # 2. Ver logs del pod que falla
-kubectl logs vip-catastro-service-consulta-xxxxx -n vip-catastro --previous
+kubectl logs acm-catastro-service-consulta-xxxxx -n acm-catastro --previous
 
 # 3. Ver eventos del pod
-kubectl describe pod vip-catastro-service-consulta-xxxxx -n vip-catastro
+kubectl describe pod acm-catastro-service-consulta-xxxxx -n acm-catastro
 ```
 
 **Causas comunes:**
@@ -67,16 +67,16 @@ kubectl describe pod vip-catastro-service-consulta-xxxxx -n vip-catastro
 
 ```bash
 # 1. Verificar que el microservicio esta corriendo
-kubectl get pods -n vip-catastro -l app=vip-catastro-service-consulta
+kubectl get pods -n acm-catastro -l app=acm-catastro-service-consulta
 
 # 2. Verificar que el Service de K8s resuelve
-kubectl get svc -n vip-catastro
+kubectl get svc -n acm-catastro
 
 # 3. Probar conectividad desde Kong al microservicio
-kubectl exec -it kong-xxxxx -n kong -- curl http://vip-catastro-service-consulta.vip-catastro.svc.cluster.local:8080/actuator/health
+kubectl exec -it kong-xxxxx -n kong -- curl http://acm-catastro-service-consulta.acm-catastro.svc.cluster.local:8080/actuator/health
 
 # 4. Ver logs del microservicio
-kubectl logs -l app=vip-catastro-service-consulta -n vip-catastro --tail=100
+kubectl logs -l app=acm-catastro-service-consulta -n acm-catastro --tail=100
 
 # 5. Ver logs de Kong
 kubectl logs -l app=kong -n kong --tail=100
@@ -137,13 +137,13 @@ kubectl port-forward svc/rabbitmq-cluster -n rabbitmq-system 15672:15672
 # Abrir http://localhost:15672
 
 # 2. Ver la DLQ especifica
-# Navegar a Queues > vip.catastro.mutacion.dlq
+# Navegar a Queues > acm.catastro.mutacion.dlq
 
 # 3. Inspeccionar un mensaje
 # En la consola: Get Message(s) > Ack Mode: Nack requeue false > Get Message
 
 # 4. Ver logs del consumer
-kubectl logs -l app=vip-catastro-service-mutacion -n vip-catastro --tail=200 | grep -i "error\|exception\|failed"
+kubectl logs -l app=acm-catastro-service-mutacion -n acm-catastro --tail=200 | grep -i "error\|exception\|failed"
 ```
 
 **Causas comunes:**
@@ -159,8 +159,8 @@ kubectl logs -l app=vip-catastro-service-mutacion -n vip-catastro --tail=200 | g
 
 ```bash
 # Mover mensajes de DLQ al queue original (desde RabbitMQ Management)
-# Queue > vip.catastro.mutacion.dlq > Move messages
-# Destination: vip.catastro.mutacion.queue
+# Queue > acm.catastro.mutacion.dlq > Move messages
+# Destination: acm.catastro.mutacion.queue
 ```
 
 > **Precaucion:** antes de reprocesar, verificar que la causa raiz esta resuelta. De lo contrario los mensajes volveran a la DLQ.
@@ -210,7 +210,7 @@ kubectl exec -it redis-master-0 -n redis -- redis-cli INFO memory | grep used_me
 # Panel: Kong > Latency by Route
 
 # 2. Verificar latencia del microservicio
-kubectl logs -l app=vip-catastro-service-consulta -n vip-catastro --tail=50 | grep duration_ms
+kubectl logs -l app=acm-catastro-service-consulta -n acm-catastro --tail=50 | grep duration_ms
 
 # 3. Verificar latencia de Redis
 kubectl exec -it redis-master-0 -n redis -- redis-cli --latency
@@ -250,7 +250,7 @@ graph LR
 
 ```bash
 # 1. Verificar headers de rate limit en la respuesta
-curl -v https://{kong-url}/vip/catastro/v1/predios 2>&1 | grep -i "x-ratelimit"
+curl -v https://{kong-url}/acm/catastro/v1/predios 2>&1 | grep -i "x-ratelimit"
 # X-RateLimit-Limit-Minute: 60
 # X-RateLimit-Remaining-Minute: 0
 
@@ -278,13 +278,13 @@ kubectl get nodes
 kubectl top nodes
 
 # Pods por namespace
-kubectl get pods -n vip-catastro
+kubectl get pods -n acm-catastro
 kubectl get pods -n kong
 kubectl get pods -n redis
 kubectl get pods -n rabbitmq-system
 
 # Logs con follow
-kubectl logs -f -l app=vip-catastro-service-consulta -n vip-catastro
+kubectl logs -f -l app=acm-catastro-service-consulta -n acm-catastro
 
 # Port-forward para acceso local
 kubectl port-forward svc/grafana 3000:80 -n monitoring        # Grafana
@@ -299,13 +299,13 @@ kubectl port-forward svc/redis-master 6379:6379 -n redis       # Redis
 kubectl exec -it redis-master-0 -n redis -- redis-cli
 
 # Buscar keys por patron
-KEYS vip:catastro:predio:*
+KEYS acm:catastro:predio:*
 
 # Ver TTL de una key
-TTL vip:catastro:predio:05001010203040000000
+TTL acm:catastro:predio:05001010203040000000
 
 # Borrar key manualmente
-DEL vip:catastro:predio:05001010203040000000
+DEL acm:catastro:predio:05001010203040000000
 
 # Ver estadisticas
 INFO stats
@@ -316,11 +316,11 @@ INFO memory
 
 ```
 # Filtrar logs por servicio
-{namespace="vip-catastro", app="vip-catastro-service-consulta"}
+{namespace="acm-catastro", app="acm-catastro-service-consulta"}
 
 # Filtrar errores
-{namespace="vip-catastro"} |= "ERROR"
+{namespace="acm-catastro"} |= "ERROR"
 
 # Filtrar por correlation ID
-{namespace="vip-catastro"} |= "550e8400-e29b-41d4-a716-446655440000"
+{namespace="acm-catastro"} |= "550e8400-e29b-41d4-a716-446655440000"
 ```

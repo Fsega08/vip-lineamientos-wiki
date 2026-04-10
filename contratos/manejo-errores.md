@@ -77,14 +77,14 @@ Http_Estado: 409
       "Codigo_Error": "VLD-001",
       "Ruta": "/Datos_Operacion/Numero_Documento",
       "Mensaje": "El campo Numero_Documento es obligatorio.",
-      "Origen": "vip-gateway-gateway-proxy"
+      "Origen": "acm-gateway-gateway-proxy"
     },
     {
       "Tipo_Error": "NEGOCIO",
       "Codigo_Error": "CTR-012",
       "Ruta": "/Datos_Operacion/Tipo_Solicitud",
       "Mensaje": "El tipo de solicitud no se encuentra parametrizado.",
-      "Origen": "vip-catastro-service-consulta"
+      "Origen": "acm-catastro-service-consulta"
     }
   ],
   "Datos_Operacion": {}
@@ -108,7 +108,7 @@ Http_Estado: 502
       "Codigo_Error": "INT-001",
       "Ruta": null,
       "Mensaje": "El servicio externo snr-service no se encuentra disponible.",
-      "Origen": "vip-catastro-adapter-snr"
+      "Origen": "acm-catastro-adapter-snr"
     }
   ],
   "Datos_Operacion": {}

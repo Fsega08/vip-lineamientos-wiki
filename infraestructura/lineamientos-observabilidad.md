@@ -62,7 +62,7 @@ management:
 Cada microservicio deberia agregar metricas de negocio:
 
 ```java
-@Timed(value = "vip.catastro.consulta.predio", description = "Tiempo de consulta de predio")
+@Timed(value = "acm.catastro.consulta.predio", description = "Tiempo de consulta de predio")
 public ResponseEntity<?> consultarPredio(RequestDTO request) { ... }
 ```
 
@@ -96,9 +96,9 @@ Todos los microservicios deben emitir logs en formato **JSON estructurado** para
 {
   "timestamp": "2026-04-06T08:45:00.123-05:00",
   "level": "INFO",
-  "logger": "com.vortexbird.vip.catastro.service.ConsultaService",
+  "logger": "com.vortexbird.acm.catastro.service.ConsultaService",
   "message": "Consulta de predio exitosa",
-  "service": "vip-catastro-service-consulta",
+  "service": "acm-catastro-service-consulta",
   "traceId": "abc123def456",
   "spanId": "789ghi",
   "correlationId": "550e8400-e29b-41d4-a716-446655440000",

@@ -133,4 +133,4 @@ Si el filtro no retorna resultados, el response es exitoso (HTTP 200) con `Regis
 
 - La paginacion es obligatoria en todo endpoint que retorne listas. No se permiten endpoints que retornen todos los registros sin paginacion.
 - El `Total_Registros` puede omitirse si el conteo es costoso (ej: consultas geoespaciales). En ese caso, se retorna `null` y el consumidor navega con "pagina siguiente / anterior".
-- El cache de Redis debe incluir los parametros de paginacion y filtrado en el `hash_request` de la key. Ejemplo: `vip:catastro:consulta:{hash(filtros+pagina+tamanio)}`.
+- El cache de Redis debe incluir los parametros de paginacion y filtrado en el `hash_request` de la key. Ejemplo: `acm:catastro:consulta:{hash(filtros+pagina+tamanio)}`.

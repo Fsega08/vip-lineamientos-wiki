@@ -36,10 +36,10 @@ Definir cuando usar comunicacion sincrona (REST) y cuando asincrona (RabbitMQ) e
 
 | Operacion | Microservicio | Backend |
 |-----------|---------------|---------|
-| Consultar predio por NPN | vip-catastro-service-consulta | Catastro BD |
-| Consultar avaluo catastral | vip-catastro-service-consulta | Catastro BD |
-| Validar geometria OGC | vip-geo-service-geometrias | PostGIS |
-| Consultar intervinientes | vip-catastro-service-consulta | IGAC |
+| Consultar predio por NPN | acm-catastro-service-consulta | Catastro BD |
+| Consultar avaluo catastral | acm-catastro-service-consulta | Catastro BD |
+| Validar geometria OGC | acm-geo-service-geometrias | PostGIS |
+| Consultar intervinientes | acm-catastro-service-consulta | IGAC |
 
 ### Timeout
 
@@ -63,11 +63,11 @@ Definir cuando usar comunicacion sincrona (REST) y cuando asincrona (RabbitMQ) e
 
 | Operacion | Exchange | Routing Key | Consumer |
 |-----------|----------|-------------|----------|
-| Solicitar mutacion catastral | vip.catastro | vip.catastro.mutacion.solicitada | vip-catastro-service-mutacion |
-| Invalidar cache de predio | vip.catastro | vip.catastro.predio.actualizado | vip-catastro-service-consulta |
-| Enviar notificacion email | vip.notificacion | vip.notificacion.email.enviado | vip-notificaciones-service-notificacion |
-| Procesar archivo cargado | vip.archivo | vip.archivo.procesamiento.iniciado | vip-archivos-service-archivo |
-| Validacion geoespacial batch | vip.geo | vip.geo.validacion.solicitada | vip-geo-service-geometrias |
+| Solicitar mutacion catastral | acm.catastro | acm.catastro.mutacion.solicitada | acm-catastro-service-mutacion |
+| Invalidar cache de predio | acm.catastro | acm.catastro.predio.actualizado | acm-catastro-service-consulta |
+| Enviar notificacion email | acm.notificacion | acm.notificacion.email.enviado | acm-notificaciones-service-notificacion |
+| Procesar archivo cargado | acm.archivo | acm.archivo.procesamiento.iniciado | acm-archivos-service-archivo |
+| Validacion geoespacial batch | acm.geo | acm.geo.validacion.solicitada | acm-geo-service-geometrias |
 
 ### Reintentos
 

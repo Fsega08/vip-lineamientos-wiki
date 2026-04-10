@@ -16,34 +16,34 @@ Centralizar el inventario de todos los microservicios de la plataforma VIP con s
 
 | Microservicio | Namespace | Componente | Responsabilidad | Estado |
 |---------------|-----------|------------|-----------------|--------|
-| vip-catastro-service-consulta | vip-catastro | service | Consultas de predios, NPN, avaluos, intervinientes | Activo |
-| vip-catastro-service-mutacion | vip-catastro | service | Operaciones de mutacion catastral (transferencias, actualizaciones) | Activo |
+| acm-catastro-service-consulta | acm-catastro | service | Consultas de predios, NPN, avaluos, intervinientes | Activo |
+| acm-catastro-service-mutacion | acm-catastro | service | Operaciones de mutacion catastral (transferencias, actualizaciones) | Activo |
 
 ### 2.2 Dominio: Geoespacial
 
 | Microservicio | Namespace | Componente | Responsabilidad | Estado |
 |---------------|-----------|------------|-----------------|--------|
-| vip-geo-service-geometrias | vip-geo | service | Operaciones PostGIS, validacion de geometrias, transformacion de coordenadas | Activo |
+| acm-geo-service-geometrias | acm-geo | service | Operaciones PostGIS, validacion de geometrias, transformacion de coordenadas | Activo |
 
 ### 2.3 Dominio: Urbanismo
 
 | Microservicio | Namespace | Componente | Responsabilidad | Estado |
 |---------------|-----------|------------|-----------------|--------|
-| vip-urbanismo-service-licencias | vip-urbanismo | service | Gestion de licencias urbanisticas, uso de suelo | Planificado |
+| acm-urbanismo-service-licencias | acm-urbanismo | service | Gestion de licencias urbanisticas, uso de suelo | Planificado |
 
 ### 2.4 Dominio: Hacienda
 
 | Microservicio | Namespace | Componente | Responsabilidad | Estado |
 |---------------|-----------|------------|-----------------|--------|
-| vip-hacienda-service-predial | vip-hacienda | service | Impuesto predial, liquidacion tributaria | Planificado |
+| acm-hacienda-service-predial | acm-hacienda | service | Impuesto predial, liquidacion tributaria | Planificado |
 
 ### 2.5 Plataforma
 
 | Microservicio | Namespace | Componente | Responsabilidad | Estado |
 |---------------|-----------|------------|-----------------|--------|
-| vip-gateway-gateway-proxy | vip-gateway | gateway | API Gateway, enrutamiento, autenticacion (Kong) | Activo |
-| vip-notificaciones-service-notificacion | vip-notificaciones | service | Emails, SMS, notificaciones push | Planificado |
-| vip-archivos-service-archivo | vip-archivos | service | Gestion de archivos S3 | Planificado |
+| acm-gateway-gateway-proxy | acm-gateway | gateway | API Gateway, enrutamiento, autenticacion (Kong) | Activo |
+| acm-notificaciones-service-notificacion | acm-notificaciones | service | Emails, SMS, notificaciones push | Planificado |
+| acm-archivos-service-archivo | acm-archivos | service | Gestion de archivos S3 | Planificado |
 
 ---
 
@@ -53,64 +53,64 @@ Centralizar el inventario de todos los microservicios de la plataforma VIP con s
 
 | Microservicio | PostgreSQL | PostGIS | Redis | RabbitMQ | Keycloak |
 |---------------|:----------:|:-------:|:-----:|:--------:|:--------:|
-| vip-catastro-service-consulta | Si | No | Si | Si | Si |
-| vip-catastro-service-mutacion | Si | No | Si | Si | Si |
-| vip-geo-service-geometrias | Si | Si | Si | Si | Si |
-| vip-urbanismo-service-licencias | Si | No | Si | Si | Si |
-| vip-hacienda-service-predial | Si | No | Si | Si | Si |
-| vip-gateway-gateway-proxy | Si | No | Si | No | Si |
+| acm-catastro-service-consulta | Si | No | Si | Si | Si |
+| acm-catastro-service-mutacion | Si | No | Si | Si | Si |
+| acm-geo-service-geometrias | Si | Si | Si | Si | Si |
+| acm-urbanismo-service-licencias | Si | No | Si | Si | Si |
+| acm-hacienda-service-predial | Si | No | Si | Si | Si |
+| acm-gateway-gateway-proxy | Si | No | Si | No | Si |
 
 ### 3.2 Dependencias Externas (Backends)
 
 | Microservicio | IGAC | SNR | Hacienda Municipal | Catastro Backend |
 |---------------|:----:|:---:|:------------------:|:----------------:|
-| vip-catastro-service-consulta | Si | Si | No | Si |
-| vip-catastro-service-mutacion | Si | No | No | Si |
-| vip-geo-service-geometrias | Si | No | No | No |
-| vip-urbanismo-service-licencias | No | No | No | No |
-| vip-hacienda-service-predial | No | No | Si | Si |
+| acm-catastro-service-consulta | Si | Si | No | Si |
+| acm-catastro-service-mutacion | Si | No | No | Si |
+| acm-geo-service-geometrias | Si | No | No | No |
+| acm-urbanismo-service-licencias | No | No | No | No |
+| acm-hacienda-service-predial | No | No | Si | Si |
 
 ### 3.3 Dependencias entre Microservicios
 
 | Microservicio | Depende de | Tipo | Descripcion |
 |---------------|------------|------|-------------|
-| vip-catastro-service-mutacion | vip-catastro-service-consulta | Sincrono | Valida existencia del predio antes de mutar |
-| vip-catastro-service-mutacion | vip-geo-service-geometrias | Sincrono | Valida geometria en mutaciones con componente espacial |
-| vip-catastro-service-consulta | vip-catastro-service-mutacion | Evento | Escucha `vip.catastro.predio.actualizado` para invalidar cache |
-| vip-hacienda-service-predial | vip-catastro-service-consulta | Sincrono | Consulta datos del predio para liquidacion |
+| acm-catastro-service-mutacion | acm-catastro-service-consulta | Sincrono | Valida existencia del predio antes de mutar |
+| acm-catastro-service-mutacion | acm-geo-service-geometrias | Sincrono | Valida geometria en mutaciones con componente espacial |
+| acm-catastro-service-consulta | acm-catastro-service-mutacion | Evento | Escucha `acm.catastro.predio.actualizado` para invalidar cache |
+| acm-hacienda-service-predial | acm-catastro-service-consulta | Sincrono | Consulta datos del predio para liquidacion |
 
 ---
 
 ## 4. Endpoints por Microservicio
 
-### vip-catastro-service-consulta
+### acm-catastro-service-consulta
 
 | Metodo | Endpoint | Descripcion |
 |--------|----------|-------------|
-| POST | `/vip/catastro/v1/predios/consultar` | Consultar predio por NPN |
-| POST | `/vip/catastro/v1/predios/avaluo` | Consultar avaluo catastral |
-| POST | `/vip/catastro/v1/predios/intervinientes` | Consultar intervinientes del predio |
+| POST | `/acm/catastro/v1/predios/consultar` | Consultar predio por NPN |
+| POST | `/acm/catastro/v1/predios/avaluo` | Consultar avaluo catastral |
+| POST | `/acm/catastro/v1/predios/intervinientes` | Consultar intervinientes del predio |
 | GET | `/actuator/health/liveness` | Liveness probe |
 | GET | `/actuator/health/readiness` | Readiness probe |
 | GET | `/swagger-ui.html` | Documentacion Swagger |
 
-### vip-catastro-service-mutacion
+### acm-catastro-service-mutacion
 
 | Metodo | Endpoint | Descripcion |
 |--------|----------|-------------|
-| POST | `/vip/catastro/v1/mutaciones/solicitar` | Solicitar mutacion catastral |
-| POST | `/vip/catastro/v1/mutaciones/estado` | Consultar estado de mutacion |
+| POST | `/acm/catastro/v1/mutaciones/solicitar` | Solicitar mutacion catastral |
+| POST | `/acm/catastro/v1/mutaciones/estado` | Consultar estado de mutacion |
 | GET | `/actuator/health/liveness` | Liveness probe |
 | GET | `/actuator/health/readiness` | Readiness probe |
 | GET | `/swagger-ui.html` | Documentacion Swagger |
 
-### vip-geo-service-geometrias
+### acm-geo-service-geometrias
 
 | Metodo | Endpoint | Descripcion |
 |--------|----------|-------------|
-| POST | `/vip/geo/v1/geometrias/validar` | Validar geometria OGC |
-| POST | `/vip/geo/v1/geometrias/transformar` | Transformar sistema de referencia |
-| POST | `/vip/geo/v1/municipio/limites` | Consultar limites del municipio |
+| POST | `/acm/geo/v1/geometrias/validar` | Validar geometria OGC |
+| POST | `/acm/geo/v1/geometrias/transformar` | Transformar sistema de referencia |
+| POST | `/acm/geo/v1/municipio/limites` | Consultar limites del municipio |
 | GET | `/actuator/health/liveness` | Liveness probe |
 | GET | `/actuator/health/readiness` | Readiness probe |
 | GET | `/swagger-ui.html` | Documentacion Swagger |
@@ -121,11 +121,11 @@ Centralizar el inventario de todos los microservicios de la plataforma VIP con s
 
 | Microservicio | Publica en | Consume de |
 |---------------|------------|------------|
-| vip-catastro-service-mutacion | `vip.catastro.mutacion.solicitada`, `vip.catastro.predio.actualizado` | — |
-| vip-catastro-service-consulta | — | `vip.catastro.predio.actualizado` (invalida cache) |
-| vip-geo-service-geometrias | `vip.geo.validacion.completado`, `vip.geo.validacion.fallido` | `vip.geo.validacion.solicitada` |
-| vip-notificaciones-service-notificacion | — | `vip.notificacion.email.enviado` |
-| vip-archivos-service-archivo | `vip.archivo.procesamiento.completado` | `vip.archivo.procesamiento.iniciado` |
+| acm-catastro-service-mutacion | `acm.catastro.mutacion.solicitada`, `acm.catastro.predio.actualizado` | — |
+| acm-catastro-service-consulta | — | `acm.catastro.predio.actualizado` (invalida cache) |
+| acm-geo-service-geometrias | `acm.geo.validacion.completado`, `acm.geo.validacion.fallido` | `acm.geo.validacion.solicitada` |
+| acm-notificaciones-service-notificacion | — | `acm.notificacion.email.enviado` |
+| acm-archivos-service-archivo | `acm.archivo.procesamiento.completado` | `acm.archivo.procesamiento.iniciado` |
 
 ---
 

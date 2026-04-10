@@ -68,18 +68,18 @@ Nunca. Los errores `SISTEMA` (SYS-001 a SYS-005) siempre retornan mensajes gener
 **Como agrego un nuevo dominio a la plataforma?**
 
 1. Definir el nombre del dominio (ej: `tributario`).
-2. Crear el namespace `vip-tributario` siguiendo [Lineamientos de Namespaces](infraestructura/lineamientos-namespaces.md).
-3. Registrar los microservicios con patron `vip-tributario-{componente}-{funcionalidad}`.
-4. Registrar el exchange en RabbitMQ: `vip.tributario`.
+2. Crear el namespace `acm-tributario` siguiendo [Lineamientos de Namespaces](infraestructura/lineamientos-namespaces.md).
+3. Registrar los microservicios con patron `acm-tributario-{componente}-{funcionalidad}`.
+4. Registrar el exchange en RabbitMQ: `acm.tributario`.
 5. Actualizar el [Inventario de Servicios](inventario/inventario-servicios.md).
 6. Si aplica, definir un nuevo prefijo de error (ej: `TRB`) en el catalogo de errores.
 7. Registrar las routes en [Kong](infraestructura/lineamientos-kong.md).
 
 ---
 
-**El prefijo `vip` es fijo?**
+**El prefijo `acm` es fijo?**
 
-No. El prefijo es configurable por proyecto en `application.yml` bajo `plataforma.prefijo`. Para la Alcaldia de Medellin es `vip`. Para otros clientes puede ser diferente. Todo lo que usa el prefijo (microservicios, namespaces, queues, keys de Redis) se adapta automaticamente.
+No. El prefijo es configurable por proyecto en `application.yml` bajo `plataforma.prefijo`. Para la Alcaldia de Medellin es `acm`. Para otros clientes puede ser diferente. Todo lo que usa el prefijo (microservicios, namespaces, queues, keys de Redis) se adapta automaticamente.
 
 ---
 
@@ -93,13 +93,13 @@ El cuarto segmento (`componente`) permite diferenciar el tipo tecnico: `service`
 
 **Si cacheo una consulta paginada, como manejo las diferentes paginas?**
 
-Los parametros de paginacion y filtrado se incluyen en el hash del request para generar la key de Redis. Ejemplo: `vip:catastro:consulta:{hash(filtros+pagina+tamanio)}`. Cada combinacion de filtros + pagina es una key diferente.
+Los parametros de paginacion y filtrado se incluyen en el hash del request para generar la key de Redis. Ejemplo: `acm:catastro:consulta:{hash(filtros+pagina+tamanio)}`. Cada combinacion de filtros + pagina es una key diferente.
 
 ---
 
 **Cuando se invalida el cache automaticamente?**
 
-Cuando un microservicio modifica un dato, publica un evento en RabbitMQ (ej: `vip.catastro.predio.actualizado`). El microservicio de consulta escucha el evento y borra la key de Redis. El siguiente request traera el dato fresco del backend. Ver detalle en [Cache Redis](estandares/cache-redis.md).
+Cuando un microservicio modifica un dato, publica un evento en RabbitMQ (ej: `acm.catastro.predio.actualizado`). El microservicio de consulta escucha el evento y borra la key de Redis. El siguiente request traera el dato fresco del backend. Ver detalle en [Cache Redis](estandares/cache-redis.md).
 
 ---
 
@@ -142,8 +142,8 @@ No en QA/produccion. Las Network Policies solo permiten trafico entrante desde e
 **Como veo los logs de un microservicio?**
 
 Tres opciones:
-1. **kubectl**: `kubectl logs -f -l app=vip-catastro-service-consulta -n vip-catastro`
-2. **Grafana/Loki**: filtrar con `{namespace="vip-catastro", app="vip-catastro-service-consulta"}`
-3. **Por correlation ID**: en Loki `{namespace="vip-catastro"} |= "550e8400-e29b..."` para seguir un request especifico
+1. **kubectl**: `kubectl logs -f -l app=acm-catastro-service-consulta -n acm-catastro`
+2. **Grafana/Loki**: filtrar con `{namespace="acm-catastro", app="acm-catastro-service-consulta"}`
+3. **Por correlation ID**: en Loki `{namespace="acm-catastro"} |= "550e8400-e29b..."` para seguir un request especifico
 
 Ver mas en el [Runbook](guias/runbook.md).

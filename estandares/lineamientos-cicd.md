@@ -112,11 +112,11 @@ ENTRYPOINT ["java", "-jar", "app.jar"]
 
 ```bash
 # Tag con semver + commit SHA corto
-docker tag app registry.vortexbird.com/vip/vip-catastro-service-consulta:1.2.3
-docker tag app registry.vortexbird.com/vip/vip-catastro-service-consulta:1.2.3-abc1234
+docker tag app registry.vortexbird.com/vip/acm-catastro-service-consulta:1.2.3
+docker tag app registry.vortexbird.com/vip/acm-catastro-service-consulta:1.2.3-abc1234
 
 # Push
-docker push registry.vortexbird.com/vip/vip-catastro-service-consulta:1.2.3
+docker push registry.vortexbird.com/vip/acm-catastro-service-consulta:1.2.3
 ```
 
 | Ambiente | Registry | Tag Mutability |
@@ -146,12 +146,12 @@ docker push registry.vortexbird.com/vip/vip-catastro-service-consulta:1.2.3
 
 ```bash
 # Actualizar imagen en el deployment
-kubectl set image deployment/vip-catastro-service-consulta \
-  vip-catastro-service-consulta=registry.vortexbird.com/vip/vip-catastro-service-consulta:1.2.3 \
-  -n vip-catastro
+kubectl set image deployment/acm-catastro-service-consulta \
+  acm-catastro-service-consulta=registry.vortexbird.com/vip/acm-catastro-service-consulta:1.2.3 \
+  -n acm-catastro
 
 # Verificar rollout
-kubectl rollout status deployment/vip-catastro-service-consulta -n vip-catastro
+kubectl rollout status deployment/acm-catastro-service-consulta -n acm-catastro
 ```
 
 ### Rollback
@@ -159,7 +159,7 @@ kubectl rollout status deployment/vip-catastro-service-consulta -n vip-catastro
 Si el readiness probe falla despues del deploy:
 
 ```bash
-kubectl rollout undo deployment/vip-catastro-service-consulta -n vip-catastro
+kubectl rollout undo deployment/acm-catastro-service-consulta -n acm-catastro
 ```
 
 ---

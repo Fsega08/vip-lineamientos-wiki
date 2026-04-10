@@ -30,7 +30,7 @@ El prefijo es configurable por proyecto en `application.yml` bajo `plataforma.pr
 
 | Segmento | Descripcion | Ejemplo |
 |----------|-------------|---------|
-| `prefijo` | Identificador del proyecto, configurable por ambiente | `vip` |
+| `prefijo` | Identificador del proyecto, configurable por ambiente | `acm` |
 | `namespace` | Dominio funcional. Coincide con el namespace de K8s (sin prefijo) | `catastro`, `geo`, `gateway` |
 | `componente` | Tipo tecnico del artefacto (ver tabla 3.2) | `service`, `adapter`, `gateway` |
 | `funcionalidad` | Funcion especifica que cumple | `consulta`, `mutacion`, `validacion` |
@@ -51,7 +51,7 @@ El prefijo es configurable por proyecto en `application.yml` bajo `plataforma.pr
 - Todo en **minusculas**, formato **kebab-case** (separado por guiones).
 - Siempre **4 segmentos**: prefijo, namespace, componente y funcionalidad.
 - El prefijo se obtiene de la configuracion del ambiente (`application.yml` bajo `plataforma.prefijo`).
-- El namespace identifica el dominio funcional y **debe coincidir** con el namespace de Kubernetes (sin el prefijo). Ej: namespace K8s `vip-catastro` → segmento `catastro`.
+- El namespace identifica el dominio funcional y **debe coincidir** con el namespace de Kubernetes (sin el prefijo). Ej: namespace K8s `acm-catastro` → segmento `catastro`.
 - El componente indica el tipo tecnico del artefacto (ver tabla 3.2).
 - La funcionalidad describe la responsabilidad especifica del microservicio.
 
@@ -59,14 +59,14 @@ El prefijo es configurable por proyecto en `application.yml` bajo `plataforma.pr
 
 | Microservicio | Namespace | Componente | Funcionalidad |
 |---------------|-----------|------------|---------------|
-| vip-catastro-service-consulta | vip-catastro | service | Consultas de predios, NPN, avaluos |
-| vip-catastro-service-mutacion | vip-catastro | service | Operaciones de mutacion catastral |
-| vip-geo-service-geometrias | vip-geo | service | Operaciones PostGIS, validacion de geometrias |
-| vip-urbanismo-service-licencias | vip-urbanismo | service | Gestion de licencias urbanisticas |
-| vip-hacienda-service-predial | vip-hacienda | service | Impuesto predial, liquidacion |
-| vip-gateway-gateway-proxy | vip-gateway | gateway | API Gateway / punto de entrada (Kong) |
-| vip-notificaciones-service-notificacion | vip-notificaciones | service | Emails, SMS, notificaciones push |
-| vip-archivos-service-archivo | vip-archivos | service | Gestion de archivos S3 |
+| acm-catastro-service-consulta | acm-catastro | service | Consultas de predios, NPN, avaluos |
+| acm-catastro-service-mutacion | acm-catastro | service | Operaciones de mutacion catastral |
+| acm-geo-service-geometrias | acm-geo | service | Operaciones PostGIS, validacion de geometrias |
+| acm-urbanismo-service-licencias | acm-urbanismo | service | Gestion de licencias urbanisticas |
+| acm-hacienda-service-predial | acm-hacienda | service | Impuesto predial, liquidacion |
+| acm-gateway-gateway-proxy | acm-gateway | gateway | API Gateway / punto de entrada (Kong) |
+| acm-notificaciones-service-notificacion | acm-notificaciones | service | Emails, SMS, notificaciones push |
+| acm-archivos-service-archivo | acm-archivos | service | Gestion de archivos S3 |
 
 ---
 
@@ -80,10 +80,10 @@ La mensajeria se organiza con exchanges de tipo **Topic**. Cada dominio tiene su
 
 | Componente | Patron | Ejemplo |
 |------------|--------|---------|
-| Exchange | `{prefijo}.{dominio}` | `vip.catastro` |
-| Queue | `{prefijo}.{dominio}.{accion}.queue` | `vip.catastro.mutacion.queue` |
-| Routing Key | `{prefijo}.{dominio}.{accion}.{evento}` | `vip.catastro.mutacion.solicitada` |
-| Dead Letter Queue | `{prefijo}.{dominio}.{accion}.dlq` | `vip.catastro.mutacion.dlq` |
+| Exchange | `{prefijo}.{dominio}` | `acm.catastro` |
+| Queue | `{prefijo}.{dominio}.{accion}.queue` | `acm.catastro.mutacion.queue` |
+| Routing Key | `{prefijo}.{dominio}.{accion}.{evento}` | `acm.catastro.mutacion.solicitada` |
+| Dead Letter Queue | `{prefijo}.{dominio}.{accion}.dlq` | `acm.catastro.mutacion.dlq` |
 
 ### 4.2 Reglas
 
@@ -125,6 +125,6 @@ Los siguientes eventos estan predefinidos como vocabulario comun para las routin
 - El prefijo es **configurable por ambiente** en `application.yml` bajo `plataforma.prefijo` y no debe hardcodearse en el codigo fuente.
 - Al agregar un nuevo microservicio o cola, se debe actualizar el catalogo en este documento.
 - Las DLQ deben configurarse con politicas de reintento: maximo **3 reintentos** con **backoff exponencial** (1s, 2s, 4s). Mensajes fallidos van a DLQ con TTL de **24 horas**.
-- Los exchanges de tipo Topic permiten que un consumidor se suscriba a todos los eventos de un dominio usando el wildcard `#` (ej: `vip.catastro.#`).
+- Los exchanges de tipo Topic permiten que un consumidor se suscriba a todos los eventos de un dominio usando el wildcard `#` (ej: `acm.catastro.#`).
 - La convencion de 4 segmentos aplica tambien al nombre del **artefacto Maven**, al nombre del **contenedor Docker** y al **Deployment en Kubernetes (EKS)**.
 - El segmento `namespace` del nombre del microservicio debe coincidir con el namespace de K8s (ver [Lineamientos de Namespaces](infraestructura/lineamientos-namespaces.md)).
