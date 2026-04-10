@@ -42,7 +42,7 @@ Si desarrollas, configuras infraestructura o despliegas microservicios:
 | Concepto | Patron |
 |----------|--------|
 | Microservicio | `{prefijo}-{namespace}-{componente}-{funcionalidad}` |
-| API Route | `/{prefijo}/{version}/{dominio}/{recurso}` |
+| API Route | `/{prefijo}/{dominio}/{version}/{recurso}` |
 | Redis Key | `{prefijo}:{dominio}:{entidad}:{identificador}` |
 | RabbitMQ Queue | `{prefijo}.{dominio}.{accion}.queue` |
 | Routing Key | `{prefijo}.{dominio}.{accion}.{evento}` |

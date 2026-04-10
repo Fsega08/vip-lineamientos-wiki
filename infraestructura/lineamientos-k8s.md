@@ -237,8 +237,8 @@ Kong debe enrutar las peticiones de Swagger sin autenticacion:
 
 | Route | Service | Auth |
 |-------|---------|------|
-| `/vip/v1/catastro/consulta/swagger-ui.html` | vip-catastro-service-consulta | No |
-| `/vip/v1/catastro/consulta/v3/api-docs` | vip-catastro-service-consulta | No |
+| `/vip/catastro/v1/consulta/swagger-ui.html` | vip-catastro-service-consulta | No |
+| `/vip/catastro/v1/consulta/v3/api-docs` | vip-catastro-service-consulta | No |
 
 ---
 

@@ -87,9 +87,9 @@ Centralizar el inventario de todos los microservicios de la plataforma VIP con s
 
 | Metodo | Endpoint | Descripcion |
 |--------|----------|-------------|
-| POST | `/vip/v1/catastro/predios/consultar` | Consultar predio por NPN |
-| POST | `/vip/v1/catastro/predios/avaluo` | Consultar avaluo catastral |
-| POST | `/vip/v1/catastro/predios/intervinientes` | Consultar intervinientes del predio |
+| POST | `/vip/catastro/v1/predios/consultar` | Consultar predio por NPN |
+| POST | `/vip/catastro/v1/predios/avaluo` | Consultar avaluo catastral |
+| POST | `/vip/catastro/v1/predios/intervinientes` | Consultar intervinientes del predio |
 | GET | `/actuator/health/liveness` | Liveness probe |
 | GET | `/actuator/health/readiness` | Readiness probe |
 | GET | `/swagger-ui.html` | Documentacion Swagger |
@@ -98,8 +98,8 @@ Centralizar el inventario de todos los microservicios de la plataforma VIP con s
 
 | Metodo | Endpoint | Descripcion |
 |--------|----------|-------------|
-| POST | `/vip/v1/catastro/mutaciones/solicitar` | Solicitar mutacion catastral |
-| POST | `/vip/v1/catastro/mutaciones/estado` | Consultar estado de mutacion |
+| POST | `/vip/catastro/v1/mutaciones/solicitar` | Solicitar mutacion catastral |
+| POST | `/vip/catastro/v1/mutaciones/estado` | Consultar estado de mutacion |
 | GET | `/actuator/health/liveness` | Liveness probe |
 | GET | `/actuator/health/readiness` | Readiness probe |
 | GET | `/swagger-ui.html` | Documentacion Swagger |
@@ -108,9 +108,9 @@ Centralizar el inventario de todos los microservicios de la plataforma VIP con s
 
 | Metodo | Endpoint | Descripcion |
 |--------|----------|-------------|
-| POST | `/vip/v1/geo/geometrias/validar` | Validar geometria OGC |
-| POST | `/vip/v1/geo/geometrias/transformar` | Transformar sistema de referencia |
-| POST | `/vip/v1/geo/municipio/limites` | Consultar limites del municipio |
+| POST | `/vip/geo/v1/geometrias/validar` | Validar geometria OGC |
+| POST | `/vip/geo/v1/geometrias/transformar` | Transformar sistema de referencia |
+| POST | `/vip/geo/v1/municipio/limites` | Consultar limites del municipio |
 | GET | `/actuator/health/liveness` | Liveness probe |
 | GET | `/actuator/health/readiness` | Readiness probe |
 | GET | `/swagger-ui.html` | Documentacion Swagger |

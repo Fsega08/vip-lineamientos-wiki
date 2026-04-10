@@ -250,7 +250,7 @@ graph LR
 
 ```bash
 # 1. Verificar headers de rate limit en la respuesta
-curl -v https://{kong-url}/vip/v1/catastro/predios 2>&1 | grep -i "x-ratelimit"
+curl -v https://{kong-url}/vip/catastro/v1/predios 2>&1 | grep -i "x-ratelimit"
 # X-RateLimit-Limit-Minute: 60
 # X-RateLimit-Remaining-Minute: 0
 

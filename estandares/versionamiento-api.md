@@ -10,20 +10,30 @@ Definir la estrategia de versionamiento para las APIs de la plataforma VIP, gara
 
 ---
 
-## 2. Estrategia: Versionamiento por Path
+## 2. Estrategia: Versionamiento por Dominio en el Path
 
-Las APIs de VIP usan **versionamiento en el path** del URL:
-
-```
-/{prefijo}/{version}/{dominio}/{recurso}
-```
-
-Ejemplo:
+Las APIs de VIP usan **versionamiento por dominio en el path** del URL. La version va despues del dominio, permitiendo que cada dominio evolucione de forma independiente:
 
 ```
-/vip/v1/catastro/predios
-/vip/v2/catastro/predios
+/{prefijo}/{dominio}/{version}/{recurso}
 ```
+
+Ejemplos:
+
+```
+/vip/catastro/v1/predios
+/vip/catastro/v2/predios
+/vip/geo/v1/geometrias
+```
+
+> Catastro puede estar en v2 mientras geo sigue en v1. Cada dominio versiona a su propio ritmo.
+
+### Por que version por dominio y no global
+
+- Cada dominio (catastro, geo, urbanismo, hacienda) evoluciona a ritmos diferentes.
+- Un breaking change en mutaciones catastrales no debe forzar nueva version en geo.
+- En Kong se rutea por dominio — un route por `/{prefijo}/{dominio}/v{n}/` es mas natural.
+- Los consumidores que solo usan un dominio no se ven afectados por cambios en otros.
 
 ### Por que path y no header
 
@@ -45,7 +55,7 @@ Ejemplo:
 | Cambiar tipo de dato de un campo | **Si** | Cambiar `Avaluo` de string a number |
 | Cambiar nombre de un campo | **Si** | Renombrar `Nro_Predial` a `Numero_Predial` |
 | Cambiar estructura del Canonical | **Si** | Reestructurar `Datos_Operacion` |
-| Agregar nuevo endpoint | No | Agregar `/vip/v1/catastro/predios/historico` |
+| Agregar nuevo endpoint | No | Agregar `/vip/catastro/v1/predios/historico` |
 | Cambiar comportamiento de endpoint existente | **Si** | Cambiar logica de consulta que retorna datos diferentes |
 
 ### 3.2 Regla de compatibilidad
@@ -55,7 +65,7 @@ Ejemplo:
 
 ### 3.3 Convivencia de versiones
 
-- Se soportan maximo **2 versiones simultaneas** (actual + anterior).
+- Se soportan maximo **2 versiones simultaneas** por dominio (actual + anterior).
 - La version anterior se mantiene por **6 meses** despues del lanzamiento de la nueva.
 - Se debe notificar a los consumidores con minimo **30 dias** de anticipacion antes de deprecar una version.
 
@@ -67,8 +77,9 @@ Cada version se registra como un route independiente apuntando al mismo service 
 
 | Route | Service | Version |
 |-------|---------|---------|
-| `/vip/v1/catastro/predios` | vip-catastro-service-consulta | v1 |
-| `/vip/v2/catastro/predios` | vip-catastro-service-consulta-v2 | v2 |
+| `/vip/catastro/v1/predios` | vip-catastro-service-consulta | v1 |
+| `/vip/catastro/v2/predios` | vip-catastro-service-consulta-v2 | v2 |
+| `/vip/geo/v1/geometrias` | vip-geo-service-geometrias | v1 |
 
 Si la nueva version es compatible internamente (misma logica, diferente contrato), el microservicio puede manejar ambas versiones con un path mapping interno.
 

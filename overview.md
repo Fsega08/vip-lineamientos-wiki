@@ -123,7 +123,7 @@ sequenceDiagram
     participant RD as Redis
     participant BE as Backend
 
-    C->>K: POST /vip/v1/catastro/predios<br>Authorization: Bearer {JWT}
+    C->>K: POST /vip/catastro/v1/predios<br>Authorization: Bearer {JWT}
     K->>K: Validar JWT (Keycloak)
     K->>K: Inyectar X-Correlation-Id
 

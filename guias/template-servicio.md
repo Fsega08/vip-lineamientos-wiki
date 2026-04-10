@@ -45,7 +45,7 @@
 
 | Metodo | Ruta | Descripcion |
 |--------|------|-------------|
-| POST | `/vip/v1/{dominio}/{recurso}` | Descripcion de la operacion |
+| POST | `/vip/{dominio}/v1/{recurso}` | Descripcion de la operacion |
 
 ### 3.2 Campos de Datos_Operacion
 
