@@ -3,7 +3,7 @@
 **Vortex Integration Platform (VIP)** — Alcaldia de Medellin  
 Plataforma de interoperabilidad para el dominio catastral LADM-COL 4.1.
 
-**Nuevo aqui?** Empieza por el [Overview de VIP](overview.md) | [Glosario](glosario.md)
+**Nuevo aqui?** Empieza por el [Overview de VIP](overview.md) | [Glosario](glosario.md) | [FAQ](faq.md)
 
 ---
 

@@ -1,6 +1,7 @@
 - [Inicio](/)
 - [Overview de VIP](overview.md)
 - [Glosario](glosario.md)
+- [FAQ](faq.md)
 - **Contratos de API**
   - [Canonical](contratos/canonical.md)
   - [Manejo de Errores](contratos/manejo-errores.md)
@@ -20,5 +21,6 @@
 - **Guias**
   - [Documentacion de Servicios](guias/guia-documentacion.md)
   - [Template de Servicio](guias/template-servicio.md)
+  - [Runbook / Troubleshooting](guias/runbook.md)
 - **Inventario**
   - [Servicios y Dependencias](inventario/inventario-servicios.md)

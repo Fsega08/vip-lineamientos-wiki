@@ -57,23 +57,23 @@ http://vip-catastro-service-consulta.vip-catastro.svc.cluster.local:8080
 **Patron de rutas:**
 
 ```
-/{prefijo}/{dominio}/{recurso}
+/{prefijo}/{version}/{dominio}/{recurso}
 ```
 
 | Route | Service | Metodos |
 |-------|---------|---------|
-| `/vip/catastro/predios` | vip-catastro-service-consulta | GET |
-| `/vip/catastro/predios/mutaciones` | vip-catastro-service-mutacion | POST, PUT |
-| `/vip/geo/geometrias` | vip-geo-service-geometrias | GET, POST |
-| `/vip/urbanismo/licencias` | vip-urbanismo-service-licencias | GET, POST |
-| `/vip/hacienda/predial` | vip-hacienda-service-predial | GET, POST |
+| `/vip/v1/catastro/predios` | vip-catastro-service-consulta | GET, POST |
+| `/vip/v1/catastro/mutaciones` | vip-catastro-service-mutacion | POST, PUT |
+| `/vip/v1/geo/geometrias` | vip-geo-service-geometrias | GET, POST |
+| `/vip/v1/urbanismo/licencias` | vip-urbanismo-service-licencias | GET, POST |
+| `/vip/v1/hacienda/predial` | vip-hacienda-service-predial | GET, POST |
 
 **Reglas:**
 
-- Todas las rutas inician con `/{prefijo}/`.
+- Todas las rutas inician con `/{prefijo}/{version}/`. Ver [Versionamiento de API](estandares/versionamiento-api.md).
 - Los recursos se nombran en **plural** y **minusculas**.
 - No incluir verbos en la ruta (el metodo HTTP indica la accion).
-- Usar path parameters para identificadores: `/vip/catastro/predios/{npn}`.
+- Usar path parameters para identificadores: `/vip/v1/catastro/predios/{npn}`.
 
 ---
 
